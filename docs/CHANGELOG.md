@@ -1,5 +1,20 @@
 # CHANGELOG
 
+## v1.1.6 - Build Fix: Suspense Boundary (November 28, 2025)
+
+### 🔧 Critical Fix
+- **Fixed Vercel build failure** - Wrapped DebugMenu in Suspense boundary
+- **Issue**: `useSearchParams()` was causing prerender errors on all pages
+- **Solution**: Added `<Suspense fallback={null}>` wrapper around DebugMenu component
+- **Impact**: All pages now build successfully for static generation
+
+### 📝 Technical Details
+- Next.js 14 requires Suspense boundaries for components using `useSearchParams()`
+- DebugMenu component was in layout.tsx without Suspense, breaking static generation
+- Build now completes without errors on Vercel
+
+---
+
 ## v1.1.5 - Mobile UX Overhaul (November 28, 2025)
 
 ### 🎨 Mobile-Responsive Typography

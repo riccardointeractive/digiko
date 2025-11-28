@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
 import { GeistSans } from 'geist/font/sans';
 import { GeistMono } from 'geist/font/mono';
 import './globals.css';
@@ -111,7 +112,9 @@ export default function RootLayout({
             </footer>
 
             {/* Debug Menu - Shows floating bug button when ?debug=true */}
-            <DebugMenu />
+            <Suspense fallback={null}>
+              <DebugMenu />
+            </Suspense>
           </div>
         </KleverProvider>
         <Analytics />

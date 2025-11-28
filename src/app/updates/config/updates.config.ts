@@ -7,6 +7,20 @@ import { UpdateEntry, TypeStyles } from '../types/updates.types';
 
 const updates: UpdateEntry[] = [
   {
+    version: '1.1.6',
+    date: 'November 28, 2025',
+    title: 'Build Fix - Suspense Boundary',
+    type: 'fix',
+    changes: [
+      'Fixed critical Vercel build failure affecting all pages',
+      'Wrapped DebugMenu component in Suspense boundary to fix prerender errors',
+      'Issue: useSearchParams() was causing "missing suspense boundary" errors',
+      'Solution: Added <Suspense fallback={null}> wrapper in layout.tsx',
+      'All pages now build successfully for static generation',
+      'Debug mode functionality remains fully operational',
+    ],
+  },
+  {
     version: '1.1.5',
     date: 'November 28, 2025',
     title: 'Mobile UX Overhaul - Fintech-Grade Polish',
