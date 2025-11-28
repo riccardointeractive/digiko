@@ -3,6 +3,8 @@ import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 import { KleverProvider } from "@/context/KleverContext";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 export const dynamic = 'force-dynamic';
 
@@ -20,7 +22,9 @@ export default function RootLayout({
     <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
       <body className="antialiased">
         <KleverProvider>
+          <Header />
           {children}
+          <Footer />
         </KleverProvider>
       </body>
     </html>
