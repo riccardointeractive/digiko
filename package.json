@@ -1,6 +1,6 @@
 {
   "name": "digiko-web3-app",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "description": "Digiko Web3 DApp built on Klever Blockchain",
   "scripts": {
@@ -8,6 +8,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "type-check": "tsc --noEmit",
+    "precommit": "npm run build && npm run type-check",
     "dev:clean": "rm -rf .next node_modules/.cache .turbo && pkill -f next; npm run dev"
   },
   "dependencies": {

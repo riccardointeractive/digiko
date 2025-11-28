@@ -93,3 +93,6 @@ docs/dev/SESSION_*.md
 contract/Cargo.lock
 contract/meta/
 contract/output/
+
+# Personal Files
+temp/code-snippets

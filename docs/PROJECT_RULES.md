@@ -1321,3 +1321,648 @@ All should match the version in `src/config/app.ts`.
 ---
 
 These rules supplement the existing PROJECT_RULES.md and help prevent the structural issues identified in the November 28, 2024 audit.
+## RULE 35: COMMIT TIERS
+
+Not all commits are equal. Use the appropriate process for the type of change.
+
+### TIER 1: Quick Commits (No Ceremony)
+
+**For:** Typos, comments, documentation, small fixes  
+**Process:** Just commit and push  
+**Time:** <1 minute
+
+**Examples:**
+```bash
+git add .
+git commit -m "docs: fix typo in README"
+git push
+```
+
+```bash
+git commit -m "style: update button padding"
+git commit -m "chore: remove console.log"
+git commit -m "docs: add missing comment"
+```
+
+**No need for:**
+- Version bumps
+- Updates page changes
+- Elaborate commit messages
+- Pre-commit ceremony
+
+---
+
+### TIER 2: Regular Commits (Light Ceremony)
+
+**For:** Bug fixes, small features, refactors, improvements  
+**Process:** Good commit message only  
+**Time:** 2-3 minutes
+
+**Format:**
+```
+<type>(<scope>): <description>
+
+[optional body explaining changes]
+
+[optional footer with breaking changes]
+```
+
+**Types:**
+- `feat`: New feature
+- `fix`: Bug fix
+- `refactor`: Code restructuring
+- `perf`: Performance improvement
+- `style`: Styling changes
+- `chore`: Maintenance tasks
+
+**Examples:**
+```bash
+git add .
+git commit -m "feat(staking): add loading state to stake button
+
+Shows spinner while transaction is processing
+Improves user feedback during staking"
+git push
+```
+
+```bash
+git commit -m "fix(swap): correct decimal precision for BABYDGKO
+
+Changed from 4 to 8 decimal places
+Fixes transaction amount calculation"
+```
+
+```bash
+git commit -m "refactor(dashboard): extract portfolio card component
+
+Moved PortfolioCard to separate file
+Improves code organization and reusability"
+```
+
+**No need for:**
+- Version bumps (unless it's a release)
+- Updates page changes (save for releases)
+
+---
+
+### TIER 3: Release Commits (Full Ceremony - "let's git it")
+
+**For:** Major features, version releases, breaking changes  
+**Process:** Full workflow from RULE 19  
+**Time:** 5-10 minutes
+
+**When to use:**
+- Adding major new features (swap, NFTs, games)
+- Version releases (v1.0.0 → v1.1.0)
+- Breaking changes
+- Significant refactors
+- End of development sprint
+
+**Full process:**
+1. Update version in `src/config/app.ts`
+2. Update `src/app/updates/page.tsx` with changes
+3. Update `docs/CHANGELOG.md` if needed
+4. Commit with comprehensive message
+5. Push
+
+**Example:**
+```bash
+# 1. Update version
+# Edit src/config/app.ts: v1.0.0 → v1.1.0
+
+# 2. Update updates page
+# Edit src/app/updates/page.tsx: Add v1.1.0 entry
+
+# 3. Commit
+git add .
+git commit -m "release: v1.1.0 - Enhanced staking experience
+
+Major Changes:
+- Added instant unstaking feature
+- Improved rewards calculation
+- Enhanced mobile responsiveness
+- Fixed decimal precision issues
+
+Breaking Changes:
+- None
+
+Files: Modified 12 files, added 3 new components"
+
+# 4. Push
+git push
+```
+
+---
+
+### Decision Tree
+
+**Ask yourself:**
+
+**Is this a typo/doc/comment?**  
+→ YES: TIER 1 (quick commit)
+
+**Is this a new feature or bug fix?**  
+→ YES: Is it a major feature?  
+   → YES: TIER 3 (release)  
+   → NO: TIER 2 (regular commit)
+
+**Is this a version release?**  
+→ YES: TIER 3 (release)
+
+**Still unsure?**  
+→ Default to TIER 2 (better to have good commit message)
+
+---
+
+### Commit Message Format Reference
+
+**TIER 1:**
+```
+<type>: <description>
+```
+
+**TIER 2:**
+```
+<type>(<scope>): <description>
+
+[optional body]
+```
+
+**TIER 3:**
+```
+<type>: <version> - <title>
+
+[detailed description of changes]
+
+Breaking Changes:
+[list any breaking changes]
+
+Files: [summary of changes]
+```
+
+---
+
+### Examples by Scenario
+
+**Fixing a typo:**
+```bash
+git commit -m "docs: fix typo in staking guide"  # TIER 1
+```
+
+**Adding loading state:**
+```bash
+git commit -m "feat(staking): add loading spinner to stake button"  # TIER 2
+```
+
+**Adding major swap feature:**
+```bash
+# Update version, updates page, then:
+git commit -m "release: v1.1.0 - DEX Swap Implementation"  # TIER 3
+```
+
+**Fixing precision bug:**
+```bash
+git commit -m "fix(swap): correct BABYDGKO decimal precision"  # TIER 2
+```
+
+**Refactoring dashboard:**
+```bash
+git commit -m "refactor(dashboard): modularize portfolio components"  # TIER 2
+```
+
+**Removing console.log:**
+```bash
+git commit -m "chore: remove debug console logs"  # TIER 1
+```
+
+**Adding NFT marketplace:**
+```bash
+# Major feature, update version, then:
+git commit -m "release: v2.0.0 - NFT Marketplace Launch"  # TIER 3
+```
+
+---
+
+## RULE 36: VERCEL WORKFLOW
+
+Leverage Vercel's features for better development workflow.
+
+### Enable Preview Deployments
+
+**Every git push to a branch automatically creates a preview URL.**
+
+**Already enabled by default!** Nothing to configure.
+
+**Usage:**
+```bash
+# 1. Create feature branch
+git checkout -b feature/new-swap-ui
+
+# 2. Make changes and push
+git push origin feature/new-swap-ui
+
+# 3. Get preview URL from Vercel dashboard
+# URL format: digiko-git-feature-new-swap-ui-riccardointeractive.vercel.app
+
+# 4. Test thoroughly on preview
+
+# 5. If good, merge to main
+git checkout main
+git merge feature/new-swap-ui
+git push  # Automatic production deploy
+```
+
+---
+
+### Environment Variables
+
+**Store secrets in Vercel dashboard, not in .env files.**
+
+**Setup:**
+1. Go to https://vercel.com/dashboard
+2. Click "digiko" project
+3. Settings → Environment Variables
+4. Add each variable for appropriate environments
+
+**Public variables** (safe to expose):
+```
+NEXT_PUBLIC_KLEVER_API=https://api.klever.org
+NEXT_PUBLIC_NETWORK=mainnet
+NEXT_PUBLIC_APP_VERSION=v1.0.0
+```
+
+**Private variables** (server-side only):
+```
+ADMIN_PASSWORD_HASH=...
+TELEGRAM_BOT_TOKEN=...
+DATABASE_URL=...
+```
+
+**Important:**
+- After adding env vars, redeploy for them to take effect
+- Keep local `.env` for development only
+- Never commit `.env` to git (already in .gitignore)
+
+---
+
+### Branch Strategy
+
+**Recommended branches:**
+```
+main              → Production (digiko.io)
+feature/[name]    → Preview deployments
+fix/[name]        → Preview deployments
+test/[name]       → Preview deployments
+```
+
+**Workflow:**
+1. Always work in feature branches
+2. Push to get preview URL
+3. Test on preview thoroughly
+4. Merge to main when ready
+5. Automatic production deploy
+
+---
+
+### Rollback
+
+**If production has issues:**
+
+1. Go to Vercel dashboard
+2. Click "Deployments"
+3. Find last good deployment
+4. Click "..." → "Promote to Production"
+
+**Instant rollback!**
+
+---
+
+### Monitoring
+
+**Vercel automatically tracks:**
+- Build success/failure
+- Deployment status
+- Performance metrics
+- Error rates
+
+**Enable notifications:**
+- Settings → Notifications
+- Choose email or Slack
+- Get notified of deployments and errors
+
+---
+
+## RULE 37: FILE DELIVERY WORKFLOW
+
+Choose the right method for delivering code changes.
+
+### Git Patches (Recommended for Code Changes)
+
+**Use for:** Code changes, bug fixes, features (1-20 files)
+
+**Benefits:**
+- Zero human error (git applies it)
+- Fast (one command)
+- Reviewable (see exact changes)
+- Reversible (easy to undo)
+
+**Workflow:**
+```bash
+# 1. Download patch file
+# 2. Apply it
+git apply ~/Downloads/patch-name.patch
+
+# 3. Verify
+git status
+git diff
+
+# 4. Commit
+git add .
+git commit -m "message"
+git push
+```
+
+**See:** `docs/dev/GIT_PATCH_WORKFLOW.md` for complete guide
+
+---
+
+### Zip Files (For Large Changes)
+
+**Use for:** New projects, templates, binary files, 20+ files
+
+**When to use:**
+- Initial project setup
+- Adding image assets
+- Complete feature scaffolds
+- Large refactors
+
+**Workflow:**
+```bash
+cd /Users/riccardomarconato/digiko-web3-app
+unzip -o ~/Downloads/filename.zip
+git status
+git add .
+git commit -m "message"
+git push
+```
+
+---
+
+### Direct Instructions (For Tiny Changes)
+
+**Use for:** 1-2 line changes, typos, single value updates
+
+**When to use:**
+- Fix typo in README
+- Change one constant
+- Update one import
+- Add single comment
+
+**Example:**
+```
+"In src/config/app.ts, line 2, change:
+  version: 'v1.0.0'
+to:
+  version: 'v1.1.0'
+"
+```
+
+---
+
+### Decision Matrix
+
+| Change Type | Files | Method |
+|------------|-------|--------|
+| Code changes | 1-20 | Git patch |
+| Bug fixes | Any | Git patch |
+| New features | 1-20 | Git patch |
+| Refactoring | Any | Git patch |
+| Large scaffold | 20+ | Zip |
+| Binary files | Any | Zip |
+| Images/fonts | Any | Zip |
+| Tiny edits | 1-2 lines | Direct instruction |
+| Typos | 1-2 lines | Direct instruction |
+
+**Default:** Use git patches unless there's a specific reason not to
+
+---
+
+## RULE 38: PRE-COMMIT CHECKS
+
+Ensure code quality before committing.
+
+### Automatic Checks (Recommended)
+
+**Install Husky for git hooks:**
+
+```bash
+cd /Users/riccardomarconato/digiko-web3-app
+
+# Install husky
+npm install --save-dev husky
+
+# Initialize
+npx husky-init
+
+# Add pre-commit hook
+npx husky add .husky/pre-commit "npm run build"
+```
+
+**Now every commit automatically:**
+1. Runs `npm run build`
+2. If build fails → Commit is blocked
+3. If build succeeds → Commit proceeds
+
+---
+
+### Manual Checks (Current)
+
+**Before every commit:**
+
+```bash
+# 1. Build must succeed
+npm run build
+
+# 2. Check for TypeScript errors
+npm run type-check  # (if you add this script)
+
+# 3. Verify git status
+git status
+
+# 4. Review changes
+git diff
+```
+
+**If all pass → Safe to commit**
+
+---
+
+### Pre-Commit Checklist
+
+**TIER 1 commits:**
+- [ ] Code compiles locally
+
+**TIER 2 commits:**
+- [ ] Code compiles locally
+- [ ] No TypeScript errors
+- [ ] No console errors in browser
+- [ ] Changes tested locally
+
+**TIER 3 commits:**
+- [ ] All TIER 2 checks pass
+- [ ] Build succeeds (`npm run build`)
+- [ ] All critical paths tested
+- [ ] Mobile responsive checked
+- [ ] No console errors in production build
+- [ ] Version numbers synchronized
+- [ ] Updates page reflects changes
+- [ ] Documentation updated if needed
+
+---
+
+### Recommended package.json Scripts
+
+Add these to your `package.json`:
+
+```json
+{
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit",
+    "precommit": "npm run build && npm run type-check"
+  }
+}
+```
+
+Then pre-commit check is just:
+```bash
+npm run precommit
+```
+
+---
+
+### Vercel Integration
+
+**Vercel automatically runs checks on every deploy:**
+- ✅ `npm run build`
+- ✅ TypeScript compilation
+- ✅ ESLint checks
+
+**If any fail → Deployment is cancelled**
+
+This is your safety net! But still run checks locally to save time.
+
+---
+
+## RULE 39: CONTINUOUS IMPROVEMENT
+
+This rules document is living and evolving.
+
+### Adding New Rules
+
+**When to add a rule:**
+- Pattern emerges from repeated mistakes
+- New workflow is established
+- Tool or process changes
+- Lesson learned from issues
+
+**How to add:**
+1. Document the rule clearly
+2. Provide examples
+3. Explain why it exists
+4. Add to appropriate section
+5. Update table of contents
+
+**Format:**
+```markdown
+## RULE [NUMBER]: [TITLE]
+
+[Clear explanation]
+
+**Why this rule exists:**
+[Context]
+
+**How to follow:**
+[Steps or examples]
+
+**Examples:**
+[Good vs bad examples]
+```
+
+---
+
+### Reviewing Rules
+
+**Monthly review:**
+- Are all rules still relevant?
+- Are any rules being ignored? (Why?)
+- Can any rules be simplified?
+- Do we need new rules?
+
+**Update when:**
+- Tools change (Next.js updates, new Vercel features)
+- Workflow improves (better process discovered)
+- Team grows (new developers need guidance)
+- Pain points emerge (rules prevent future pain)
+
+---
+
+### Rule Lifecycle
+
+**New Rule** → **Established** → **Refined** → **Maintained**
+
+**If rule is consistently ignored:**
+- Is it too complex?
+- Is it solving the wrong problem?
+- Does it need to be removed?
+
+**Good rules are:**
+- Clear and actionable
+- Easy to follow
+- Prevent real problems
+- Improve workflow
+
+**Bad rules are:**
+- Overly complex
+- Theoretical (not practical)
+- Ignored by everyone
+- Create more work than they save
+
+---
+
+## SUMMARY OF NEW RULES
+
+**RULE 35: COMMIT TIERS**
+- Quick commits for typos/docs (no ceremony)
+- Regular commits for features/fixes (good message)
+- Release commits for versions (full ceremony)
+
+**RULE 36: VERCEL WORKFLOW**
+- Use preview deployments for testing
+- Store secrets in Vercel dashboard
+- Leverage automatic deployments
+- Monitor with Vercel analytics
+
+**RULE 37: FILE DELIVERY**
+- Git patches for code changes (recommended)
+- Zips for large changes/binaries
+- Direct instructions for tiny edits
+
+**RULE 38: PRE-COMMIT CHECKS**
+- Always build before committing
+- Consider adding Husky for automation
+- Use pre-commit checklist
+- Vercel provides safety net
+
+**RULE 39: CONTINUOUS IMPROVEMENT**
+- Rules evolve with project
+- Review regularly
+- Add new rules when patterns emerge
+- Remove rules that don't help
+
+---
+
+These rules should be appended to docs/PROJECT_RULES.md
