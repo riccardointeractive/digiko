@@ -50,7 +50,7 @@ export default function ErrorLoggingTest() {
           title: 'Failed to Load Token Data',
           message: 'Unable to fetch DGKO statistics from Klever API. Please try again in a moment.',
           error: new Error('API request failed with status 503'),
-          userAddress: address,
+          userAddress: address || undefined,
           component: 'DgkoPage',
           action: 'Load DGKO token statistics',
           api: {
@@ -98,7 +98,7 @@ export default function ErrorLoggingTest() {
           title: 'Swap Failed',
           message: 'Price changed too much during transaction. Please increase slippage tolerance and try again.',
           error: new Error('Slippage tolerance exceeded'),
-          userAddress: address,
+          userAddress: address || undefined,
           component: 'SwapPage',
           action: 'Swap 1000 DGKO for USDT (1% slippage)',
           transaction: {
@@ -138,7 +138,7 @@ export default function ErrorLoggingTest() {
           title: 'Network Error',
           message: 'Unable to connect to Klever blockchain. Please check your internet connection.',
           error: new Error('Network request failed'),
-          userAddress: address,
+          userAddress: address || undefined,
           component: 'DashboardPage',
           action: 'Fetch wallet balance',
           api: {
