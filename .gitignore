@@ -3,96 +3,44 @@ node_modules/
 
 # Next.js
 .next/
-out/
-
-# Production
-/build
 
 # Environment variables
 .env*
 !.env.example
 
-# Debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-*.log
-
-# Local env files
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
 # macOS
 .DS_Store
-.AppleDouble
-.LSOverride
 
 # Temporary files
 temp/
-z_code_snippets
-
-# Internal docs (not for git)
-INTERNAL_DEV_DOCS.md
 
 # Build artifacts
 tsconfig.tsbuildinfo
+*.tsbuildinfo
 
-# CRITICAL: Contract build artifacts
-# These directories can reach 300+ MB and will cause deployment failures
-# ⚠️ DO NOT COMMIT THESE - they are generated from source
+# Contract build artifacts (CRITICAL - can reach 300+ MB)
 contract/target/
-contract/meta/target/
-contract/wasm/target/
-contract/output/*.wasm
+contract/meta/
+contract/output/
 
-# Rust build artifacts (individual files)
-# These accumulate quickly: .o files, compiled libraries, metadata
+# Rust build artifacts
 *.o
 *.rlib
 *.rmeta
 *.d
 
-# Cargo lock for contracts (regenerated)
-contract/wasm/Cargo.lock
-
 # IDE
 .vscode/
-.idea/
-*.swp
-*.swo
-*~
 
-# Testing
-coverage/
-.nyc_output/
-
-# Vercel
-.vercel
-
-next-env.d.ts
-kleverSDK/
-kleverchain.workspace.json
-contract/kleverchain.workspace.json
-
-# Workflow files (added by cleanup script)
-*_FIX.md
-READY_TO_*.md
-GIT_COMMIT_*.md
-HOME_SETUP.md
-INTEGRATED_QUICK_START.md
-
-# Editor artifacts
-*.save
+# Backup files
 *.backup
 
-# Session notes
-docs/dev/SESSION_*.md
-contract/Cargo.lock
-contract/meta/
-contract/output/
+# Vercel (created locally)
+.vercel
 
-# Personal Files
-temp/code-snippets
+# kleverSDK (vendor files)
+kleverSDK/
+public/kleverSDK/
+
+# Keep this for TypeScript
+!next-env.d.ts
