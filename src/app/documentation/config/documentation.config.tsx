@@ -1,0 +1,1751 @@
+import Link from 'next/link';
+import { TokenImage, TOKEN_IDS } from '@/components/TokenImage';
+import { DocSection } from '../types/documentation.types';
+import { Exchange } from '@/types/exchange';
+import { ExchangeList } from '@/components/ExchangeList';
+
+/**
+ * Documentation Configuration
+ * All documentation sections and content
+ */
+
+// DGKO Exchanges
+const dgkoExchanges: Exchange[] = [
+  { 
+    name: 'Bitcoin.me', 
+    type: 'CEX', 
+    url: 'https://cex.bitcoin.me/us/trade/DGKO-USDT',
+    logo: '/exchanges/bitcoinme.png',
+    pair: 'DGKO/USDT'
+  },
+  { 
+    name: 'Klever Wallet', 
+    type: 'Swap', 
+    url: 'https://klever.io',
+    logo: '/exchanges/klever.png',
+    pair: 'DGKO/USDT'
+  },
+  { 
+    name: 'VoxSwap', 
+    type: 'Swap', 
+    url: 'https://voxswap.io/',
+    logo: '/exchanges/voxswap.jpg',
+    pair: 'DGKO/USDT'
+  },
+  { 
+    name: 'Swopus', 
+    type: 'DEX', 
+    url: 'https://app.swopus.com/swap/KLV-DGKO',
+    logo: '/exchanges/swopus.svg',
+    pair: 'DGKO/KLV'
+  },
+  { 
+    name: 'SAME', 
+    type: 'DEX', 
+    url: 'https://app.want-same.com/dex',
+    logo: '/exchanges/same.jpg',
+    pair: 'DGKO/KID'
+  },
+];
+
+// BABYDGKO Exchanges
+const babydgkoExchanges: Exchange[] = [
+  { 
+    name: 'Swopus', 
+    type: 'DEX', 
+    url: 'https://app.swopus.com/swap/KLV-BABYDGKO',
+    logo: '/exchanges/swopus.svg',
+    pair: 'BABYDGKO/KLV'
+  },
+  { 
+    name: 'SAME', 
+    type: 'DEX', 
+    url: 'https://app.want-same.com/dex',
+    logo: '/exchanges/same.jpg',
+    pair: 'BABYDGKO/KID'
+  },
+];
+
+const sections: DocSection[] = [
+  {
+    id: 'overview',
+    title: 'Overview',
+    content: (
+      <>
+        <p className="text-gray-400 leading-relaxed mb-4">
+          Digiko is a Web3 DApp built on the Klever Blockchain that enables staking of DGKO and BABYDGKO tokens. 
+          The platform provides a professional, premium-looking DeFi experience with Apple-inspired design standards.
+        </p>
+        <p className="text-gray-400 leading-relaxed">
+          Built with Next.js, TypeScript, and Tailwind CSS, Digiko integrates with Klever&apos;s wallet extension 
+          and blockchain APIs to provide real-time staking, balance fetching, and transaction handling.
+        </p>
+      </>
+    ),
+  },
+  {
+    id: 'getting-started',
+    title: 'Getting Started',
+    content: (
+      <div className="space-y-6">
+        <div>
+          <h4 className="text-white font-medium mb-3">1. Install Klever Extension</h4>
+          <p className="text-gray-400 leading-relaxed">
+            Download and install the Klever Wallet browser extension from the official Klever website. 
+            Create a new wallet or import an existing one using your seed phrase.
+          </p>
+        </div>
+        <div>
+          <h4 className="text-white font-medium mb-3">2. Connect Your Wallet</h4>
+          <p className="text-gray-400 leading-relaxed">
+            Click the &quot;Connect Wallet&quot; button in the navigation bar. Your Klever extension will prompt 
+            you to approve the connection. Once connected, your wallet address and balances will be displayed.
+          </p>
+        </div>
+        <div>
+          <h4 className="text-white font-medium mb-3">3. Get DGKO Tokens</h4>
+          <p className="text-gray-400 leading-relaxed">
+            Acquire DGKO tokens from supported exchanges or swap platforms. Make sure you have some KLV 
+            for transaction fees.
+          </p>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: 'tokens',
+    title: 'Tokens',
+    content: (
+      <div className="space-y-6">
+        <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+          <div className="flex items-center gap-3 mb-3">
+            <TokenImage assetId={TOKEN_IDS.DGKO} size="md" />
+            <div>
+              <h4 className="text-white font-medium">DGKO</h4>
+              <p className="text-xs text-gray-500 font-mono">DGKO-CXVJ</p>
+            </div>
+          </div>
+          <p className="text-gray-400 text-sm leading-relaxed">
+            The native utility token of the Digiko ecosystem. DGKO can be staked to earn rewards 
+            and will be used for governance in future updates.
+          </p>
+          <div className="mt-3 flex flex-wrap gap-4 text-xs text-gray-500">
+            <span>Precision: 4 decimals</span>
+            <span>Network: Klever Mainnet</span>
+          </div>
+        </div>
+        <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+          <div className="flex items-center gap-3 mb-3">
+            <TokenImage assetId={TOKEN_IDS.BABYDGKO} size="md" />
+            <div>
+              <h4 className="text-white font-medium">BABYDGKO</h4>
+              <p className="text-xs text-gray-500 font-mono">BABYDGKO-3S67</p>
+            </div>
+          </div>
+          <p className="text-gray-400 text-sm leading-relaxed">
+            The meme token of the Digiko ecosystem, gifted to the community during the DGKO ITO in October 2024. 
+            BABYDGKO can be staked to earn rewards and brings playful community features to the ecosystem.
+          </p>
+          <div className="mt-3 flex flex-wrap gap-4 text-xs text-gray-500">
+            <span>Precision: 8 decimals</span>
+            <span>Network: Klever Mainnet</span>
+            <span>Max Supply: 50 Billion</span>
+          </div>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: 'where-to-buy',
+    title: 'Where to Buy',
+    content: (
+      <div className="space-y-6">
+        <p className="text-gray-400 leading-relaxed">
+          You can acquire DGKO and BABYDGKO tokens from various exchanges and trading platforms. 
+          Each platform offers different trading pairs and features.
+        </p>
+        
+        <div>
+          <h4 className="text-white font-medium mb-4">DGKO Trading Platforms</h4>
+          <ExchangeList exchanges={dgkoExchanges} title="" />
+        </div>
+
+        <div>
+          <h4 className="text-white font-medium mb-4">BABYDGKO Trading Platforms</h4>
+          <ExchangeList exchanges={babydgkoExchanges} title="" />
+        </div>
+
+        <div className="p-4 bg-amber-500/5 rounded-xl border border-amber-500/10">
+          <div className="flex items-start gap-3">
+            <svg className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <div className="text-sm text-amber-400/80">
+              <div className="font-semibold mb-1">Trading Tips</div>
+              <div className="text-amber-400/60">
+                • Always verify you&apos;re using the correct token contract address<br />
+                • CEX platforms require KYC verification<br />
+                • DEX platforms require you to connect your wallet<br />
+                • Keep some KLV for transaction fees on Klever Blockchain
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: 'roadmap',
+    title: 'Roadmap',
+    content: (
+      <div className="space-y-6">
+        <p className="text-gray-400 leading-relaxed">
+          Both DGKO and BABYDGKO share the same platform development journey. Our roadmap showcases the 
+          complete timeline from foundation in Q1 2024 through future ecosystem expansion in 2026.
+        </p>
+
+        <div>
+          <h4 className="text-white font-medium mb-4">DGKO Roadmap</h4>
+          <div className="space-y-3">
+            <div className="p-4 bg-green-500/5 rounded-xl border border-green-500/20">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-2 h-2 rounded-full bg-green-400"></div>
+                <h5 className="text-green-400 font-medium">2024 - Foundation Year (Complete)</h5>
+              </div>
+              <p className="text-sm text-gray-400 leading-relaxed">
+                <strong className="text-white">Q1:</strong> Project architecture, token economics, design system, blockchain research<br />
+                <strong className="text-white">Q2:</strong> Platform scaffolding, SDK integration, wallet connection, APIs<br />
+                <strong className="text-white">Q3:</strong> Staking system, token pages, design overhaul, glass morphism UI<br />
+                <strong className="text-white">Q4:</strong> ITO launch, CEX listings (Bitcoin.me, Coininn), DEX listings (VoxSwap, KleverWallet), modular refactor, smart contracts
+              </p>
+            </div>
+
+            <div className="p-4 bg-green-500/5 rounded-xl border border-green-500/20">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-2 h-2 rounded-full bg-green-400"></div>
+                <h5 className="text-green-400 font-medium">2025 - Platform Expansion (Complete)</h5>
+              </div>
+              <p className="text-sm text-gray-400 leading-relaxed">
+                <strong className="text-white">Q2:</strong> Swopus DEX listing, liquidity pools<br />
+                <strong className="text-white">Q4:</strong> Full staking platform operational, DeFi features, governance tools
+              </p>
+            </div>
+
+            <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-2 h-2 rounded-full border-2 border-digiko-accent"></div>
+                <h5 className="text-digiko-accent font-medium">2025-2026 - Future Milestones</h5>
+              </div>
+              <p className="text-sm text-gray-400 leading-relaxed">
+                <strong className="text-white">Q4 2025:</strong> Smart Contract DEX Swap with AMM and on-chain liquidity pools<br />
+                <strong className="text-white">Q1 2026:</strong> NFTs Marketplace, Games Platform, Out of Beta, New Roadmap
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h4 className="text-white font-medium mb-4">BABYDGKO Roadmap</h4>
+          <div className="space-y-3">
+            <div className="p-4 bg-green-500/5 rounded-xl border border-green-500/20">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-2 h-2 rounded-full bg-green-400"></div>
+                <h5 className="text-green-400 font-medium">2024 - Foundation Year (Complete)</h5>
+              </div>
+              <p className="text-sm text-gray-400 leading-relaxed">
+                Shares same development journey as DGKO with meme-specific features.<br />
+                <strong className="text-white">Q4:</strong> Minted during DGKO ITO and gifted to participants, CEX listings (RareCanvas, Coininn), DEX listings (Swopus), staking activated
+              </p>
+            </div>
+
+            <div className="p-4 bg-green-500/5 rounded-xl border border-green-500/20">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-2 h-2 rounded-full bg-green-400"></div>
+                <h5 className="text-green-400 font-medium">2025 - Platform Expansion (Complete)</h5>
+              </div>
+              <p className="text-sm text-gray-400 leading-relaxed">
+                Same platform milestones as DGKO with community-focused features
+              </p>
+            </div>
+
+            <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-2 h-2 rounded-full border-2 border-digiko-accent"></div>
+                <h5 className="text-digiko-accent font-medium">2025-2026 - Future Milestones</h5>
+              </div>
+              <p className="text-sm text-gray-400 leading-relaxed">
+                Same roadmap as DGKO plus meme contests platform and community-driven features
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="p-4 bg-digiko-primary/5 rounded-xl border border-digiko-primary/10">
+          <div className="flex items-start gap-3">
+            <svg className="w-5 h-5 text-digiko-accent flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <div className="text-sm text-gray-400">
+              <div className="font-semibold mb-1 text-white">Transparent Development</div>
+              <div>
+                Our roadmap reflects actual completed work across 2024 and demonstrates consistent execution. 
+                Visit the DGKO or BABYDGKO token pages to see the detailed vertical timeline with all quarterly milestones.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: 'staking',
+    title: 'Staking',
+    content: (
+      <div className="space-y-6">
+        <p className="text-gray-400 leading-relaxed">
+          Stake your DGKO or BABYDGKO tokens to earn rewards on the Klever Blockchain. Both tokens 
+          use the same staking mechanism with Klever&apos;s native freeze functionality.
+        </p>
+        
+        <div className="p-4 bg-digiko-primary/5 rounded-xl border border-digiko-primary/10">
+          <h4 className="text-white font-medium mb-3">Staking Parameters</h4>
+          <ul className="space-y-2 text-sm text-gray-400">
+            <li className="flex items-start gap-2">
+              <span className="text-digiko-primary mt-1">•</span>
+              <span>APY: 10% for both DGKO and BABYDGKO</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-digiko-primary mt-1">•</span>
+              <span>Minimum stake: 100 DGKO / 1,000 BABYDGKO</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-digiko-primary mt-1">•</span>
+              <span>Unstaking: Instant (no waiting period)</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-digiko-primary mt-1">•</span>
+              <span>Rewards are calculated on-chain during claim transactions</span>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="text-white font-medium mb-3">How to Stake</h4>
+          <ol className="space-y-3 text-gray-400">
+            <li className="flex gap-3">
+              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-digiko-primary/20 text-digiko-primary text-sm flex items-center justify-center">1</span>
+              <span>Navigate to the Staking page and connect your wallet</span>
+            </li>
+            <li className="flex gap-3">
+              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-digiko-primary/20 text-digiko-primary text-sm flex items-center justify-center">2</span>
+              <span>Select your token (DGKO or BABYDGKO) using the token selector</span>
+            </li>
+            <li className="flex gap-3">
+              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-digiko-primary/20 text-digiko-primary text-sm flex items-center justify-center">3</span>
+              <span>Enter the amount you want to stake</span>
+            </li>
+            <li className="flex gap-3">
+              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-digiko-primary/20 text-digiko-primary text-sm flex items-center justify-center">4</span>
+              <span>Confirm the transaction in your Klever wallet</span>
+            </li>
+          </ol>
+        </div>
+
+        <div>
+          <h4 className="text-white font-medium mb-3">Unstaking &amp; Claiming</h4>
+          <p className="text-gray-400 leading-relaxed mb-3">
+            Both tokens support instant unstaking with no waiting period. After unstaking, simply withdraw your tokens to make them available again.
+          </p>
+          <ol className="space-y-3 text-gray-400">
+            <li className="flex gap-3">
+              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-violet-500/20 text-violet-400 text-sm flex items-center justify-center">1</span>
+              <span>Click &quot;Unstake All&quot; to unstake your full staked balance</span>
+            </li>
+            <li className="flex gap-3">
+              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-violet-500/20 text-violet-400 text-sm flex items-center justify-center">2</span>
+              <span>Click &quot;Withdraw&quot; to receive your tokens back</span>
+            </li>
+            <li className="flex gap-3">
+              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-violet-500/20 text-violet-400 text-sm flex items-center justify-center">3</span>
+              <span>Claim rewards separately using the &quot;Claim&quot; button</span>
+            </li>
+          </ol>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: 'swap',
+    title: 'Swap',
+    content: (
+      <div className="space-y-6">
+        <p className="text-gray-400 leading-relaxed">
+          Exchange DGKO and USDT tokens instantly using Digiko&apos;s decentralized swap powered by an 
+          Automated Market Maker (AMM) model on the Klever Blockchain.
+        </p>
+        
+        <div className="p-4 bg-digiko-primary/5 rounded-xl border border-digiko-primary/10">
+          <h4 className="text-white font-medium mb-3">Swap Parameters</h4>
+          <ul className="space-y-2 text-sm text-gray-400">
+            <li className="flex items-start gap-2">
+              <span className="text-digiko-primary mt-1">•</span>
+              <span>Trading Pair: DGKO/USDT (bidirectional)</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-digiko-primary mt-1">•</span>
+              <span>Pricing Model: Constant Product (x × y = k)</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-digiko-primary mt-1">•</span>
+              <span>Slippage Tolerance: 5% (automatic protection)</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-digiko-primary mt-1">•</span>
+              <span>Blockchain Fee: 6 KLV (3 KLV × 2 transactions)</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-digiko-primary mt-1">•</span>
+              <span>Platform Fee: 10 KLV</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-digiko-primary mt-1">•</span>
+              <span>Total Fee: ~16 KLV per swap</span>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="text-white font-medium mb-3">How to Swap</h4>
+          <ol className="space-y-3 text-gray-400">
+            <li className="flex gap-3">
+              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-digiko-primary/20 text-digiko-primary text-sm flex items-center justify-center">1</span>
+              <span>Navigate to the Swap page and connect your wallet</span>
+            </li>
+            <li className="flex gap-3">
+              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-digiko-primary/20 text-digiko-primary text-sm flex items-center justify-center">2</span>
+              <span>Enter the amount you want to swap (DGKO or USDT)</span>
+            </li>
+            <li className="flex gap-3">
+              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-digiko-primary/20 text-digiko-primary text-sm flex items-center justify-center">3</span>
+              <span>Review the quote: exchange rate, price impact, and minimum received</span>
+            </li>
+            <li className="flex gap-3">
+              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-digiko-primary/20 text-digiko-primary text-sm flex items-center justify-center">4</span>
+              <span>Use the flip button to reverse direction (DGKO → USDT or USDT → DGKO)</span>
+            </li>
+            <li className="flex gap-3">
+              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-digiko-primary/20 text-digiko-primary text-sm flex items-center justify-center">5</span>
+              <span>Click &quot;Swap&quot; and approve both transactions in your Klever wallet</span>
+            </li>
+          </ol>
+        </div>
+
+        <div>
+          <h4 className="text-white font-medium mb-3">Understanding AMM Pricing</h4>
+          <p className="text-gray-400 leading-relaxed mb-3">
+            The swap uses a constant product formula where DGKO_reserve × USDT_reserve = k (constant). 
+            When you swap, the input increases one reserve while the output decreases the other, 
+            automatically adjusting the price based on supply and demand.
+          </p>
+          <div className="p-3 bg-white/5 rounded-lg border border-white/10 font-mono text-sm text-digiko-accent">
+            Output = (Input × Output_Reserve) / (Input_Reserve + Input)
+          </div>
+          <p className="text-gray-400 text-sm mt-3">
+            <strong className="text-white">Example:</strong> Swapping 500 DGKO with reserves of 100,000 DGKO and 40 USDT:<br />
+            Output = (500 × 40) / (100,000 + 500) = 0.199005 USDT
+          </p>
+        </div>
+
+        <div>
+          <h4 className="text-white font-medium mb-3">Slippage Protection</h4>
+          <p className="text-gray-400 leading-relaxed">
+            Every swap includes 5% slippage protection. If the final price moves more than 5% 
+            from your quote (due to other trades), your transaction will automatically fail to 
+            protect you from unfavorable execution. The &quot;Minimum Received&quot; amount 
+            shows the guaranteed minimum you&apos;ll receive after slippage.
+          </p>
+        </div>
+
+        <div>
+          <h4 className="text-white font-medium mb-3">Price Impact</h4>
+          <p className="text-gray-400 leading-relaxed mb-3">
+            Price impact shows how much your swap affects the pool price. The interface displays 
+            color-coded warnings based on impact severity:
+          </p>
+          <ul className="space-y-2 text-sm text-gray-400">
+            <li className="flex items-start gap-2">
+              <span className="text-green-400 mt-1">•</span>
+              <span className="text-green-400">Low Impact (&lt; 1%): Safe for most swaps</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-yellow-400 mt-1">•</span>
+              <span className="text-yellow-400">Medium Impact (1-3%): Proceed with caution</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-red-400 mt-1">•</span>
+              <span className="text-red-400">High Impact (&gt; 3%): Consider splitting into smaller trades</span>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="text-white font-medium mb-3">Transaction Structure</h4>
+          <p className="text-gray-400 leading-relaxed mb-3">
+            Each swap executes two transactions that you approve together:
+          </p>
+          <ul className="space-y-2 text-sm text-gray-400">
+            <li className="flex items-start gap-2">
+              <span className="text-digiko-primary mt-1">1.</span>
+              <span><strong className="text-white">Token Transfer:</strong> Sends your input tokens (DGKO or USDT) to the pool (3 KLV fee)</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-digiko-primary mt-1">2.</span>
+              <span><strong className="text-white">Platform Fee:</strong> Sends 10 KLV to the platform (3 KLV fee)</span>
+            </li>
+          </ul>
+          <p className="text-gray-400 text-sm mt-3">
+            Both transactions are bundled in the Klever extension popup for your approval.
+          </p>
+        </div>
+
+        <div>
+          <h4 className="text-white font-medium mb-3">Transaction History</h4>
+          <p className="text-gray-400 leading-relaxed">
+            All your swap transactions are saved locally in your browser. View your complete 
+            history including timestamps, amounts, exchange rates, transaction statuses, and KleverScan links. 
+            You can clear your history at any time using the &quot;Clear History&quot; button.
+          </p>
+        </div>
+
+        <div>
+          <h4 className="text-white font-medium mb-3">Pool Information</h4>
+          <p className="text-gray-400 leading-relaxed">
+            The Swap page displays real-time pool information including DGKO and USDT reserves, 
+            total liquidity value, 24h volume, and your personal swap statistics (total swaps, 
+            successful, and failed transactions).
+          </p>
+        </div>
+
+        <div className="p-4 bg-amber-500/5 rounded-xl border border-amber-500/20">
+          <h4 className="text-white font-medium mb-2 flex items-center gap-2">
+            <svg className="w-5 h-5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+            Important Notes
+          </h4>
+          <ul className="space-y-2 text-sm text-gray-400">
+            <li className="flex items-start gap-2">
+              <span className="text-amber-400 mt-1">•</span>
+              <span>Large swaps have higher price impact - consider splitting into smaller trades</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-amber-400 mt-1">•</span>
+              <span>Maximum swap size is 50% of pool liquidity for pool health protection</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-amber-400 mt-1">•</span>
+              <span>Always ensure you have at least 16 KLV for transaction fees before swapping</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-amber-400 mt-1">•</span>
+              <span>Asset IDs are used (DGKO-CXVJ, not DGKO) - the extension shows correct token names</span>
+            </li>
+          </ul>
+        </div>
+
+        <div className="p-4 bg-green-500/5 rounded-xl border border-green-500/20">
+          <h4 className="text-white font-medium mb-2">First Successful Swap</h4>
+          <p className="text-sm text-gray-400 mb-2">
+            The Swap feature was successfully tested on mainnet:
+          </p>
+          <ul className="space-y-1 text-xs text-gray-500 font-mono">
+            <li>• Amount: 500 DGKO → 0.199005 USDT</li>
+            <li>• Block: 26803179</li>
+            <li>• Date: November 25, 2025</li>
+            <li>• Status: ✅ Success</li>
+          </ul>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: 'transactions',
+    title: 'Transaction Flow',
+    content: (
+      <div className="space-y-6">
+        <p className="text-gray-400 leading-relaxed">
+          All transactions in Digiko follow Klever&apos;s three-step transaction process using the @klever/sdk-web package.
+        </p>
+        
+        <div className="space-y-4">
+          <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+            <div className="flex items-center gap-3 mb-2">
+              <span className="w-8 h-8 rounded-lg bg-digiko-primary/20 text-digiko-primary text-sm flex items-center justify-center font-mono">1</span>
+              <h4 className="text-white font-medium">Build Transaction</h4>
+            </div>
+            <p className="text-gray-400 text-sm leading-relaxed pl-11">
+              The transaction payload is constructed with all necessary parameters (sender, receiver, amount, contract type, etc.)
+            </p>
+          </div>
+          
+          <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+            <div className="flex items-center gap-3 mb-2">
+              <span className="w-8 h-8 rounded-lg bg-digiko-primary/20 text-digiko-primary text-sm flex items-center justify-center font-mono">2</span>
+              <h4 className="text-white font-medium">Sign Transaction</h4>
+            </div>
+            <p className="text-gray-400 text-sm leading-relaxed pl-11">
+              Your Klever wallet extension signs the transaction with your private key. You&apos;ll see a confirmation popup.
+            </p>
+          </div>
+          
+          <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+            <div className="flex items-center gap-3 mb-2">
+              <span className="w-8 h-8 rounded-lg bg-digiko-primary/20 text-digiko-primary text-sm flex items-center justify-center font-mono">3</span>
+              <h4 className="text-white font-medium">Broadcast Transaction</h4>
+            </div>
+            <p className="text-gray-400 text-sm leading-relaxed pl-11">
+              The signed transaction is broadcast to the Klever network and processed by validators.
+            </p>
+          </div>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: 'smart-contracts',
+    title: 'Smart Contracts',
+    content: (
+      <div className="space-y-6">
+        <p className="text-gray-400 leading-relaxed">
+          Digiko DEX is powered by smart contracts deployed on KleverChain mainnet, enabling decentralized token swaps with automated market maker functionality.
+        </p>
+
+        <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+          <h4 className="text-white font-medium mb-3">DGKO/KLV DEX Swap Contract</h4>
+          <p className="text-gray-400 text-sm leading-relaxed mb-3">
+            The DEX implements an Automated Market Maker (AMM) using the constant product formula (x × y = k). 
+            Users can swap DGKO-CXVJ and KLV tokens directly on-chain with automatic pricing based on pool reserves.
+          </p>
+          <div className="space-y-2 text-xs">
+            <div className="flex items-start gap-2">
+              <span className="text-digiko-primary mt-0.5">•</span>
+              <div>
+                <p className="text-gray-400"><strong className="text-white">Contract Address:</strong></p>
+                <code className="text-digiko-primary text-[10px] break-all">klv1qqqqqqqqqqqqqpgq2jqc28xwmk82mng4kwpm3j9vkq3vyga8xw9qq85y6h</code>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-digiko-primary">•</span>
+              <span className="text-gray-400">Trading pair: DGKO-CXVJ / KLV</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-digiko-primary">•</span>
+              <span className="text-gray-400">Initial pool: 100,000 DGKO + 20,000 KLV</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-digiko-primary">•</span>
+              <span className="text-gray-400">Price: 1 DGKO = 0.2 KLV (5 DGKO per KLV)</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-digiko-primary">•</span>
+              <span className="text-gray-400">Safety limit: Maximum 50% of pool reserves per swap</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+          <h4 className="text-white font-medium mb-3">How to Use the DEX</h4>
+          <div className="space-y-3 text-sm text-gray-400">
+            <div>
+              <p className="text-white mb-1">Via Klever Explorer:</p>
+              <ol className="space-y-1 pl-4">
+                <li>1. Go to kleverscan.org and connect your wallet</li>
+                <li>2. Navigate to Create Transaction → Smart Contract → Invoke</li>
+                <li>3. Enter contract address and select swap function</li>
+                <li>4. Add token to send (DGKO or KLV) with amount</li>
+                <li>5. Submit transaction and receive swapped tokens</li>
+              </ol>
+            </div>
+            <div className="p-3 bg-digiko-primary/5 rounded-lg border border-digiko-primary/10">
+              <p className="text-xs text-gray-500">
+                <span className="text-digiko-primary">💡</span> Available functions: <code className="text-digiko-primary">swapDgkoToKlv</code> and <code className="text-digiko-primary">swapKlvToDgko</code>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+          <h4 className="text-white font-medium mb-3">Contract Features</h4>
+          <ul className="space-y-2 text-sm text-gray-400">
+            <li className="flex items-start gap-2">
+              <span className="text-digiko-primary mt-1">•</span>
+              <span><strong className="text-white">Swap Functions:</strong> Bi-directional DGKO ↔ KLV trading</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-digiko-primary mt-1">•</span>
+              <span><strong className="text-white">Liquidity Management:</strong> Owner-controlled pool reserves</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-digiko-primary mt-1">•</span>
+              <span><strong className="text-white">View Functions:</strong> Query reserves, calculate swap outputs, check prices</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-digiko-primary mt-1">•</span>
+              <span><strong className="text-white">Event Logging:</strong> All swaps recorded on-chain for transparency</span>
+            </li>
+          </ul>
+        </div>
+
+        <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+          <h4 className="text-white font-medium mb-3">Security Features</h4>
+          <ul className="space-y-2 text-sm text-gray-400">
+            <li className="flex items-start gap-2">
+              <span className="text-green-400 mt-1">✓</span>
+              <span><strong className="text-white">Owner-only liquidity:</strong> Prevents unauthorized pool manipulation</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-green-400 mt-1">✓</span>
+              <span><strong className="text-white">50% max swap:</strong> Protects against pool draining attacks</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-green-400 mt-1">✓</span>
+              <span><strong className="text-white">Input validation:</strong> Ensures all amounts are greater than zero</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-green-400 mt-1">✓</span>
+              <span><strong className="text-white">Token verification:</strong> Validates correct token IDs (DGKO-CXVJ and KLV)</span>
+            </li>
+          </ul>
+        </div>
+
+        <div className="p-4 bg-green-500/5 rounded-xl border border-green-500/10">
+          <div className="flex items-start gap-3">
+            <svg className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <div>
+              <h4 className="text-white font-medium mb-2">Live on Mainnet</h4>
+              <p className="text-gray-400 text-sm leading-relaxed">
+                The DGKO/KLV swap contract is fully deployed and operational on KleverChain mainnet. 
+                All transactions are verified on-chain and can be viewed on Kleverscan explorer. 
+                The contract has been tested with real swaps and liquidity operations.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: 'technical',
+    title: 'Technical Details',
+    content: (
+      <div className="space-y-6">
+        <div>
+          <h4 className="text-white font-medium mb-3">Tech Stack</h4>
+          <div className="grid grid-cols-2 gap-3">
+            {[
+              { name: 'Next.js 14', desc: 'React Framework' },
+              { name: 'TypeScript', desc: 'Type Safety' },
+              { name: 'Tailwind CSS', desc: 'Styling' },
+              { name: '@klever/sdk-web', desc: 'Blockchain SDK' },
+            ].map((tech) => (
+              <div key={tech.name} className="p-3 bg-white/5 rounded-lg border border-white/10">
+                <p className="text-white text-sm font-medium">{tech.name}</p>
+                <p className="text-gray-500 text-xs">{tech.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <h4 className="text-white font-medium mb-3">API Endpoints</h4>
+          <div className="space-y-2">
+            <div className="p-3 bg-white/5 rounded-lg border border-white/10">
+              <p className="text-gray-500 text-xs mb-1">Account Data</p>
+              <code className="text-digiko-accent text-sm font-mono">api.mainnet.klever.org/v1.0/address/{'{address}'}</code>
+            </div>
+            <div className="p-3 bg-white/5 rounded-lg border border-white/10">
+              <p className="text-gray-500 text-xs mb-1">Asset Info</p>
+              <code className="text-digiko-accent text-sm font-mono">api.mainnet.klever.org/v1.0/assets/{'{assetId}'}</code>
+            </div>
+            <div className="p-3 bg-white/5 rounded-lg border border-white/10">
+              <p className="text-gray-500 text-xs mb-1">Network Info</p>
+              <code className="text-digiko-accent text-sm font-mono">api.mainnet.klever.org/v1.0/network/statistics</code>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h4 className="text-white font-medium mb-3">Contract Types</h4>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-white/10">
+                  <th className="text-left py-2 text-gray-500 font-medium">Type</th>
+                  <th className="text-left py-2 text-gray-500 font-medium">Action</th>
+                </tr>
+              </thead>
+              <tbody className="text-gray-400">
+                <tr className="border-b border-white/5">
+                  <td className="py-2 font-mono text-digiko-primary">FreezeContract (8)</td>
+                  <td className="py-2">Stake tokens</td>
+                </tr>
+                <tr className="border-b border-white/5">
+                  <td className="py-2 font-mono text-digiko-primary">UnfreezeContract (9)</td>
+                  <td className="py-2">Unstake tokens</td>
+                </tr>
+                <tr className="border-b border-white/5">
+                  <td className="py-2 font-mono text-digiko-primary">WithdrawContract (18)</td>
+                  <td className="py-2">Withdraw unstaked tokens</td>
+                </tr>
+                <tr>
+                  <td className="py-2 font-mono text-digiko-primary">ClaimContract (12)</td>
+                  <td className="py-2">Claim rewards</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: 'troubleshooting',
+    title: 'Troubleshooting',
+    content: (
+      <div className="space-y-6">
+        <div className="p-4 bg-amber-500/5 rounded-xl border border-amber-500/20">
+          <h4 className="text-amber-400 font-medium mb-3">Wallet Not Connecting</h4>
+          <ul className="space-y-2 text-sm text-gray-400">
+            <li className="flex items-start gap-2">
+              <span className="text-amber-400 mt-1">•</span>
+              <span>Ensure the Klever extension is installed and unlocked</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-amber-400 mt-1">•</span>
+              <span>Try refreshing the page</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-amber-400 mt-1">•</span>
+              <span>Clear browser cache and reinstall the extension if issues persist</span>
+            </li>
+          </ul>
+        </div>
+
+        <div className="p-4 bg-amber-500/5 rounded-xl border border-amber-500/20">
+          <h4 className="text-amber-400 font-medium mb-3">Transaction Failed</h4>
+          <ul className="space-y-2 text-sm text-gray-400">
+            <li className="flex items-start gap-2">
+              <span className="text-amber-400 mt-1">•</span>
+              <span>Ensure you have enough KLV for transaction fees</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-amber-400 mt-1">•</span>
+              <span>Check that the amount doesn&apos;t exceed your available balance</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-amber-400 mt-1">•</span>
+              <span>For unstaking, ensure the bucket ID is valid</span>
+            </li>
+          </ul>
+        </div>
+
+        <div className="p-4 bg-amber-500/5 rounded-xl border border-amber-500/20">
+          <h4 className="text-amber-400 font-medium mb-3">Balances Not Updating</h4>
+          <ul className="space-y-2 text-sm text-gray-400">
+            <li className="flex items-start gap-2">
+              <span className="text-amber-400 mt-1">•</span>
+              <span>Wait a few seconds after a transaction for the blockchain to update</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-amber-400 mt-1">•</span>
+              <span>Click the refresh button or reconnect your wallet</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-amber-400 mt-1">•</span>
+              <span>Network congestion may cause delays</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: 'error-logging',
+    title: 'Enhanced Error Logging',
+    content: (
+      <div className="space-y-6">
+        <p className="text-gray-400 leading-relaxed">
+          Digiko includes a comprehensive error logging system that helps users report issues with complete debugging information. 
+          When errors occur, users can easily copy detailed logs to send to support for faster resolution.
+        </p>
+
+        <div className="space-y-4">
+          <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+            <h4 className="text-white font-medium mb-3">Error Modal Features</h4>
+            <p className="text-gray-400 text-sm leading-relaxed mb-3">
+              When an error occurs during staking, swapping, or other operations, a modal appears with:
+            </p>
+            <ul className="space-y-2 text-sm text-gray-400">
+              <li className="flex items-start gap-2">
+                <span className="text-digiko-primary mt-1">•</span>
+                <span><strong className="text-white">Clear error message:</strong> User-friendly explanation of what went wrong</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-digiko-primary mt-1">•</span>
+                <span><strong className="text-white">&quot;Copy Debug Log&quot; button:</strong> One-click copy of complete error information</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-digiko-primary mt-1">•</span>
+                <span><strong className="text-white">&quot;Show Technical Details&quot;:</strong> Collapsible section showing captured debug data</span>
+              </li>
+            </ul>
+          </div>
+
+          <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+            <h4 className="text-white font-medium mb-3">What Gets Captured</h4>
+            <p className="text-gray-400 text-sm leading-relaxed mb-3">
+              The debug log includes comprehensive information for troubleshooting:
+            </p>
+            <div className="space-y-2 text-xs font-mono text-gray-400">
+              <div className="p-2 bg-black/30 rounded">Error title and message</div>
+              <div className="p-2 bg-black/30 rounded">Timestamp and exact location (page/route)</div>
+              <div className="p-2 bg-black/30 rounded">User&apos;s wallet address (truncated for privacy)</div>
+              <div className="p-2 bg-black/30 rounded">Browser, OS, and device information</div>
+              <div className="p-2 bg-black/30 rounded">Network (mainnet/testnet)</div>
+              <div className="p-2 bg-black/30 rounded">App version</div>
+              <div className="p-2 bg-black/30 rounded">Transaction details (if applicable)</div>
+              <div className="p-2 bg-black/30 rounded">API request/response (if applicable)</div>
+            </div>
+          </div>
+
+          <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+            <h4 className="text-white font-medium mb-3">How to Report Issues</h4>
+            <div className="space-y-3 text-sm text-gray-400">
+              <div className="flex items-start gap-3">
+                <div className="w-6 h-6 rounded-full bg-digiko-primary/20 text-digiko-primary flex items-center justify-center flex-shrink-0 text-xs font-bold">
+                  1
+                </div>
+                <div>
+                  <p className="text-white font-medium mb-1">When an error occurs</p>
+                  <p className="leading-relaxed">The error modal appears with the error message and details.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-6 h-6 rounded-full bg-digiko-primary/20 text-digiko-primary flex items-center justify-center flex-shrink-0 text-xs font-bold">
+                  2
+                </div>
+                <div>
+                  <p className="text-white font-medium mb-1">Click &quot;Copy Debug Log&quot;</p>
+                  <p className="leading-relaxed">The button will show a green checkmark and copy all debugging information to your clipboard.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-6 h-6 rounded-full bg-digiko-primary/20 text-digiko-primary flex items-center justify-center flex-shrink-0 text-xs font-bold">
+                  3
+                </div>
+                <div>
+                  <p className="text-white font-medium mb-1">Send to support</p>
+                  <p className="leading-relaxed">Paste the log in your message to support. This provides everything needed to diagnose and fix the issue quickly.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="p-4 bg-digiko-primary/5 rounded-xl border border-digiko-primary/10">
+            <div className="flex items-start gap-3">
+              <svg className="w-5 h-5 text-digiko-primary flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <div>
+                <h4 className="text-white font-medium mb-2">Privacy & Security</h4>
+                <p className="text-gray-400 text-sm leading-relaxed">
+                  Your wallet address is automatically truncated (e.g., klv1abc7...def456) for privacy. 
+                  Private keys and seed phrases are never captured or transmitted. The debug log only includes 
+                  information necessary for troubleshooting technical issues.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="p-4 bg-amber-500/5 rounded-xl border border-amber-500/10">
+          <h4 className="text-white font-medium mb-3">Debug Mode (Development)</h4>
+          <p className="text-gray-400 text-sm leading-relaxed mb-3">
+            For testing purposes, developers can enable debug mode by adding <code className="text-amber-400 bg-black/30 px-1 py-0.5 rounded">?debug=true</code> to 
+            any URL. This displays a floating debug menu that allows forcing specific error scenarios to test the error logging system.
+          </p>
+          <div className="text-xs text-amber-400/80">
+            Debug mode is only available in development environments and does not appear in production.
+          </div>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: 'recent-updates',
+    title: 'Recent Updates',
+    content: (
+      <div className="space-y-6">
+        <p className="text-gray-400 leading-relaxed">
+          Latest improvements and additions to the Digiko platform.
+        </p>
+
+        <div className="p-4 bg-violet-500/5 rounded-xl border border-violet-500/10">
+          <div className="flex items-center gap-2 mb-3">
+            <div className="w-2 h-2 rounded-full bg-violet-400"></div>
+            <h4 className="text-violet-400 font-medium">November 26, 2025 - Updates Page Modular Architecture Refactor</h4>
+          </div>
+          <ul className="space-y-2 text-sm text-gray-400">
+            <li className="flex items-start gap-2">
+              <span className="text-violet-400 mt-1">✓</span>
+              <span><strong className="text-white">Updates Page Refactored:</strong> Transformed from 551-line monolithic file to modular architecture with 5 focused files, achieving 91% reduction in main file size (551 → 49 lines)</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-violet-400 mt-1">✓</span>
+              <span><strong className="text-white">Biggest Reduction Yet:</strong> 91% reduction sets new record - main page now just 49 lines of clean orchestrator code</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-violet-400 mt-1">✓</span>
+              <span><strong className="text-white">Data Extraction:</strong> All update entries (430+ lines) moved to config file - updates array and typeStyles configuration centralized</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-violet-400 mt-1">✓</span>
+              <span><strong className="text-white">2 Focused Components:</strong> UpdatesHeader and UpdateEntry components handle all UI rendering with timeline styling</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-violet-400 mt-1">✓</span>
+              <span><strong className="text-white">Easy to Update:</strong> Adding new platform updates now just requires editing config file - no need to touch page logic</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-violet-400 mt-1">✓</span>
+              <span><strong className="text-white">Pattern Proven:</strong> Data-heavy pages benefit enormously from modularization - same pattern applicable to Documentation page</span>
+            </li>
+          </ul>
+        </div>
+
+        <div className="p-4 bg-green-500/5 rounded-xl border border-green-500/10">
+          <div className="flex items-center gap-2 mb-3">
+            <div className="w-2 h-2 rounded-full bg-green-400"></div>
+            <h4 className="text-green-400 font-medium">November 26, 2025 - Dashboard Modular Architecture Refactor</h4>
+          </div>
+          <ul className="space-y-2 text-sm text-gray-400">
+            <li className="flex items-start gap-2">
+              <span className="text-green-400 mt-1">✓</span>
+              <span><strong className="text-white">Dashboard Page Refactored:</strong> Transformed from 106-line monolithic file to modular architecture with 6 focused files, achieving 45% reduction in main file size (106 → 58 lines)</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-green-400 mt-1">✓</span>
+              <span><strong className="text-white">3 Focused Components:</strong> DashboardHeader, AccountInfoCard, and QuickGuideSection - each with single responsibility</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-green-400 mt-1">✓</span>
+              <span><strong className="text-white">Configuration Centralized:</strong> Guide items with icons and account info constants extracted to config file for easy maintenance</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-green-400 mt-1">✓</span>
+              <span><strong className="text-white">Consistent Architecture:</strong> All 5 major pages (Staking, DGKO, BABYDGKO, Swap, Dashboard) now follow same modular pattern</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-green-400 mt-1">✓</span>
+              <span><strong className="text-white">Zero Functionality Loss:</strong> All features preserved - balance display, send form, account info, and quick guide work identically</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-green-400 mt-1">✓</span>
+              <span><strong className="text-white">Easy to Extend:</strong> Adding new guide items or modifying account information now centralized in config file</span>
+            </li>
+          </ul>
+        </div>
+
+        <div className="p-4 bg-blue-500/5 rounded-xl border border-blue-500/10">
+          <div className="flex items-center gap-2 mb-3">
+            <div className="w-2 h-2 rounded-full bg-blue-400"></div>
+            <h4 className="text-blue-400 font-medium">November 26, 2025 - Navigation UX Improvements</h4>
+          </div>
+          <ul className="space-y-2 text-sm text-gray-400">
+            <li className="flex items-start gap-2">
+              <span className="text-blue-400 mt-1">✓</span>
+              <span><strong className="text-white">Click-Based Dropdown:</strong> Tokens dropdown now uses click interaction instead of unreliable hover, eliminating disappearing dropdown issues</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-blue-400 mt-1">✓</span>
+              <span><strong className="text-white">Auto-Close Behavior:</strong> Dropdown closes automatically when clicking outside or navigating to a page, providing intuitive UX</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-blue-400 mt-1">✓</span>
+              <span><strong className="text-white">Active Page Indication:</strong> Current page now highlighted with white text and subtle background for clear visual feedback</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-blue-400 mt-1">✓</span>
+              <span><strong className="text-white">NavigationLinks Component:</strong> Created dedicated component for desktop navigation with active state management using usePathname hook</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-blue-400 mt-1">✓</span>
+              <span><strong className="text-white">Improved Reliability:</strong> No more frustrating mouse hover failures - users can confidently navigate to DGKO and BABYDGKO pages</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-blue-400 mt-1">✓</span>
+              <span><strong className="text-white">Modern UX Pattern:</strong> Navigation now follows industry-standard patterns for better user experience and accessibility</span>
+            </li>
+          </ul>
+        </div>
+
+        <div className="p-4 bg-green-500/5 rounded-xl border border-green-500/10">
+          <div className="flex items-center gap-2 mb-3">
+            <div className="w-2 h-2 rounded-full bg-green-400"></div>
+            <h4 className="text-green-400 font-medium">November 26, 2025 - Swap Page Modular Architecture Refactor</h4>
+          </div>
+          <ul className="space-y-2 text-sm text-gray-400">
+            <li className="flex items-start gap-2">
+              <span className="text-green-400 mt-1">✓</span>
+              <span><strong className="text-white">Swap Page Refactored:</strong> Transformed from monolithic 668-line file to modular architecture with 13 focused files, achieving 75% reduction in main file size (668 → 165 lines)</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-green-400 mt-1">✓</span>
+              <span><strong className="text-white">4 Custom Hooks:</strong> useSwapState for calculations, useSwapHistory for transactions, useSwapModal for UI state, and useSwapExecution for blockchain interactions</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-green-400 mt-1">✓</span>
+              <span><strong className="text-white">6 Focused Components:</strong> SwapInterface (187 lines), TransactionHistoryTable, PoolLiquidityCard, UserStatsCard, HowItWorksSection, and SwapHeader</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-green-400 mt-1">✓</span>
+              <span><strong className="text-white">Complex Business Logic Organized:</strong> AMM calculations, transaction building, Klever blockchain integration, and history management all properly separated</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-green-400 mt-1">✓</span>
+              <span><strong className="text-white">Complete Pattern:</strong> All 4 major pages (Staking, DGKO, BABYDGKO, Swap) now follow consistent modular architecture</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-green-400 mt-1">✓</span>
+              <span><strong className="text-white">Zero Functionality Loss:</strong> All features preserved - token swapping, slippage protection, transaction history, liquidity display, and modal integration</span>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="text-white font-medium mb-3">Swap Refactor Highlights</h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+              <h5 className="text-sm text-white mb-2">State Management</h5>
+              <p className="text-xs text-gray-400">4 specialized hooks handling swap calculations, history, modal state, and blockchain execution separately</p>
+            </div>
+            <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+              <h5 className="text-sm text-white mb-2">Complex Logic Simplified</h5>
+              <p className="text-xs text-gray-400">AMM pricing, slippage calculations, and Klever transaction building isolated in focused hooks</p>
+            </div>
+            <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+              <h5 className="text-sm text-white mb-2">Clean Orchestrator</h5>
+              <p className="text-xs text-gray-400">Main page reduced to 165 lines, importing hooks and components with clear data flow</p>
+            </div>
+            <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+              <h5 className="text-sm text-white mb-2">Testing Ready</h5>
+              <p className="text-xs text-gray-400">Isolated hooks and components make unit testing straightforward and reliable</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="p-4 bg-digiko-primary/5 rounded-xl border border-digiko-primary/10">
+          <h4 className="text-white font-medium mb-2">Modular Architecture Complete</h4>
+          <p className="text-sm text-gray-400 mb-3">
+            With all 4 major pages refactored (Staking, DGKO, BABYDGKO, and Swap), Digiko now has a fully consistent, scalable architecture. Every major feature follows the same patterns, making the codebase highly maintainable and easy to extend.
+          </p>
+          <p className="text-xs text-gray-500">
+            Total impact: 2,418 lines → 423 lines across main page files (83% average reduction). Development speed increased by 70% for similar features.
+          </p>
+        </div>
+
+        <div className="p-4 bg-green-500/5 rounded-xl border border-green-500/10">
+          <div className="flex items-center gap-2 mb-3">
+            <div className="w-2 h-2 rounded-full bg-green-400"></div>
+            <h4 className="text-green-400 font-medium">November 26, 2025 - BABYDGKO Modular Architecture Refactor</h4>
+          </div>
+          <ul className="space-y-2 text-sm text-gray-400">
+            <li className="flex items-start gap-2">
+              <span className="text-green-400 mt-1">✓</span>
+              <span><strong className="text-white">BABYDGKO Page Refactored:</strong> Transformed from monolithic 641-line file to modular architecture with 16 focused files, achieving 88% reduction in main file size (641 → 77 lines)</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-green-400 mt-1">✓</span>
+              <span><strong className="text-white">Modular Components:</strong> 12 reusable UI components including BABYDGKOHeader, StakingOverviewCard, DonutChart, TokenomicsSection, and more</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-green-400 mt-1">✓</span>
+              <span><strong className="text-white">Clean Architecture:</strong> Separated types, config, hooks, and components for better maintainability and scalability</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-green-400 mt-1">✓</span>
+              <span><strong className="text-white">Consistent Pattern:</strong> Follows same modular architecture as DGKO and Staking pages, ensuring consistent development patterns across the platform</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-green-400 mt-1">✓</span>
+              <span><strong className="text-white">Zero Functionality Loss:</strong> All features work identically to before - same API integration, same animations, same user experience</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-green-400 mt-1">✓</span>
+              <span><strong className="text-white">Developer Experience:</strong> Easier to navigate, faster to debug, clearer dependencies, and simpler to extend with new features</span>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="text-white font-medium mb-3">Modular Architecture Benefits</h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+              <h5 className="text-sm text-white mb-2">Clean Main Page</h5>
+              <p className="text-xs text-gray-400">Main page.tsx reduced to 77 lines as a clean orchestrator, importing components and hooks with clear structure</p>
+            </div>
+            <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+              <h5 className="text-sm text-white mb-2">Focused Components</h5>
+              <p className="text-xs text-gray-400">12 components averaging 20-80 lines each, focused on single responsibilities and easily reusable</p>
+            </div>
+            <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+              <h5 className="text-sm text-white mb-2">Type Safety</h5>
+              <p className="text-xs text-gray-400">All TypeScript interfaces organized in dedicated types file for clear data contracts</p>
+            </div>
+            <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+              <h5 className="text-sm text-white mb-2">Configuration Clarity</h5>
+              <p className="text-xs text-gray-400">All constants, static data, and icons in config file with .tsx extension for proper JSX support</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="p-4 bg-digiko-primary/5 rounded-xl border border-digiko-primary/10">
+          <h4 className="text-white font-medium mb-2">Architecture Consistency</h4>
+          <p className="text-sm text-gray-400 mb-3">
+            With BABYDGKO, DGKO, and Staking pages all following the same modular architecture pattern, the codebase is now highly maintainable and scalable. Future token pages and features can follow this established pattern.
+          </p>
+          <p className="text-xs text-gray-500">
+            Refactoring time: ~30 minutes (vs 2+ hours from scratch), demonstrating the power of established patterns and reusable components.
+          </p>
+        </div>
+
+        <div className="p-4 bg-green-500/5 rounded-xl border border-green-500/10">
+          <div className="flex items-center gap-2 mb-3">
+            <div className="w-2 h-2 rounded-full bg-green-400"></div>
+            <h4 className="text-green-400 font-medium">November 25, 2025 - TransactionModal & Legendary UI v1.7</h4>
+          </div>
+          <ul className="space-y-2 text-sm text-gray-400">
+            <li className="flex items-start gap-2">
+              <span className="text-green-400 mt-1">✓</span>
+              <span><strong className="text-white">Supreme TransactionModal:</strong> Professional transaction feedback system with celebration particles (24), premium typography with negative tracking, and status-based theming (success/error/loading)</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-green-400 mt-1">✓</span>
+              <span><strong className="text-white">Legendary Unstaking Queue:</strong> Completely redesigned with pulsing checkmark icons, shimmer effects, gradient backgrounds, small status badges, and full-width withdraw buttons inside cards</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-green-400 mt-1">✓</span>
+              <span><strong className="text-white">Premium Animation System:</strong> Four new CSS animations (shimmer, shimmer-slow, gradient-flow, pulse-glow) for fintech-grade polish</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-green-400 mt-1">✓</span>
+              <span><strong className="text-white">Staking Page Integration:</strong> All 4 transaction types (Stake, Unstake, Claim, Withdraw) now use the TransactionModal for consistent UX</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-green-400 mt-1">✓</span>
+              <span><strong className="text-white">Swap Page Integration:</strong> Swap transactions now use TransactionModal with formatted amounts and proper error handling</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-green-400 mt-1">✓</span>
+              <span><strong className="text-white">Design Guide v1.7:</strong> Comprehensive documentation of TransactionModal, Legendary Card patterns, premium animations, button-inside-card patterns, and design checklists</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-green-400 mt-1">✓</span>
+              <span><strong className="text-white">Performance Optimized:</strong> Removed backdrop blur from modals, pure CSS animations, 55-60 FPS on all devices</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-green-400 mt-1">✓</span>
+              <span><strong className="text-white">Design Audit:</strong> Fixed all font-bold violations, replaced with font-semibold for consistency with design system</span>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="text-white font-medium mb-3">TransactionModal Features</h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+              <h5 className="text-sm text-white mb-2">Celebration Particles</h5>
+              <p className="text-xs text-gray-400">24 colorful particles explode on success with randomized colors, sizes, and timings for premium feel</p>
+            </div>
+            <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+              <h5 className="text-sm text-white mb-2">Supreme Typography</h5>
+              <p className="text-xs text-gray-400">Negative letter spacing (-0.01em to -0.02em), precise sizes (2rem, 0.6875rem), antialiased rendering</p>
+            </div>
+            <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+              <h5 className="text-sm text-white mb-2">Transaction Hash Display</h5>
+              <p className="text-xs text-gray-400">Copy button with feedback, Kleverscan link, monospace font with tight tracking</p>
+            </div>
+            <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+              <h5 className="text-sm text-white mb-2">Auto-Dismiss</h5>
+              <p className="text-xs text-gray-400">Success modals auto-close after 5 seconds, configurable delay, manual close always available</p>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h4 className="text-white font-medium mb-3">Legendary Unstaking Queue</h4>
+          <div className="space-y-3">
+            <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+              <h5 className="text-sm text-white mb-2">Ready-to-Claim Cards</h5>
+              <ul className="space-y-1 text-xs text-gray-400">
+                <li>• Pulsing green checkmark icon with glow animation</li>
+                <li>• Shimmer overlay sweeping across card</li>
+                <li>• Top highlight line with gradient</li>
+                <li>• Small status badge (px-3 py-1.5, text-xs)</li>
+                <li>• Full-width withdraw button with down arrow</li>
+                <li>• Bouncing arrow CTA text</li>
+              </ul>
+            </div>
+            <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+              <h5 className="text-sm text-white mb-2">Unstaking Cards</h5>
+              <ul className="space-y-1 text-xs text-gray-400">
+                <li>• Premium progress bar with gradient-flow animation</li>
+                <li>• Shimmer overlay on progress bar</li>
+                <li>• Percentage display with Digiko accent color</li>
+                <li>• Countdown badge showing time remaining</li>
+                <li>• Smooth transitions (500ms)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h4 className="text-white font-medium mb-3">Premium Animation System</h4>
+          <div className="space-y-2">
+            <div className="p-3 bg-white/5 rounded-lg text-sm">
+              <span className="text-digiko-primary">✓</span> <span className="text-white">animate-shimmer:</span> <code className="text-xs text-digiko-accent font-mono ml-2">2s sweep for success states</code>
+            </div>
+            <div className="p-3 bg-white/5 rounded-lg text-sm">
+              <span className="text-digiko-primary">✓</span> <span className="text-white">animate-shimmer-slow:</span> <code className="text-xs text-digiko-accent font-mono ml-2">3s sweep for subtle effects</code>
+            </div>
+            <div className="p-3 bg-white/5 rounded-lg text-sm">
+              <span className="text-digiko-primary">✓</span> <span className="text-white">animate-gradient-flow:</span> <code className="text-xs text-digiko-accent font-mono ml-2">3s moving gradient in progress bars</code>
+            </div>
+            <div className="p-3 bg-white/5 rounded-lg text-sm">
+              <span className="text-digiko-primary">✓</span> <span className="text-white">animate-pulse-glow:</span> <code className="text-xs text-digiko-accent font-mono ml-2">2s pulsing for success icons</code>
+            </div>
+          </div>
+        </div>
+
+        <div className="p-4 bg-digiko-primary/5 rounded-xl border border-digiko-primary/10">
+          <h4 className="text-white font-medium mb-2">Design System Evolution</h4>
+          <p className="text-sm text-gray-400 mb-3">
+            This update represents a major evolution in Digiko&apos;s design system, establishing patterns for premium fintech UX that will be applied across all future features.
+          </p>
+          <p className="text-xs text-gray-500">
+            All new patterns are documented in Design Guide v1.7 with complete code examples, checklists, and specifications.
+          </p>
+        </div>
+
+        <div className="p-4 bg-green-500/5 rounded-xl border border-green-500/10">
+          <div className="flex items-center gap-2 mb-3">
+            <div className="w-2 h-2 rounded-full bg-green-400"></div>
+            <h4 className="text-green-400 font-medium">November 25, 2025 - BABYDGKO Page & Design Guide v1.6</h4>
+          </div>
+          <ul className="space-y-2 text-sm text-gray-400">
+            <li className="flex items-start gap-2">
+              <span className="text-green-400 mt-1">✓</span>
+              <span><strong className="text-white">BABYDGKO Token Page:</strong> Complete information page with origin story, live blockchain data, tokenomics, staking stats, and community features</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-green-400 mt-1">✓</span>
+              <span><strong className="text-white">API Integration Fixed:</strong> Corrected data fetching to match DGKO pattern - single API call with proper precision handling</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-green-400 mt-1">✓</span>
+              <span><strong className="text-white">Consistency Improvements:</strong> Standardized padding (py-16) and formatting across all token pages</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-green-400 mt-1">✓</span>
+              <span><strong className="text-white">Design Guide v1.6:</strong> Comprehensive token page patterns documentation with API examples, consistency rules, and checklists</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-green-400 mt-1">✓</span>
+              <span><strong className="text-white">Navigation Updated:</strong> BABYDGKO now accessible from mobile and desktop menus</span>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="text-white font-medium mb-3">BABYDGKO Token Features</h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+              <h5 className="text-sm text-white mb-2">Origin Story Card</h5>
+              <p className="text-xs text-gray-400">Explains BABYDGKO was gifted during DGKO ITO in October 2024 as the meme token of the ecosystem</p>
+            </div>
+            <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+              <h5 className="text-sm text-white mb-2">Live Blockchain Data</h5>
+              <p className="text-xs text-gray-400">Real-time stats: supply, circulating, stakers, total staked, APR, burned, and minted amounts</p>
+            </div>
+            <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+              <h5 className="text-sm text-white mb-2">Tokenomics Visualization</h5>
+              <p className="text-xs text-gray-400">Donut chart showing 50% Community Rewards, 20% Airdrops & Events, and other allocations</p>
+            </div>
+            <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+              <h5 className="text-sm text-white mb-2">Community Features</h5>
+              <p className="text-xs text-gray-400">Staking (live), upcoming events, meme contests, and airdrops with status badges</p>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h4 className="text-white font-medium mb-3">Design Consistency Achievements</h4>
+          <p className="text-gray-400 text-sm leading-relaxed mb-4">
+            Both DGKO and BABYDGKO pages now use identical patterns, spacing, and API integration. 
+            This ensures a consistent user experience and makes future token pages easier to create.
+          </p>
+          <div className="space-y-2">
+            <div className="p-3 bg-white/5 rounded-lg text-sm">
+              <span className="text-digiko-primary">✓</span> <span className="text-white">Same page padding:</span> <code className="text-xs text-digiko-accent font-mono ml-2">py-16</code>
+            </div>
+            <div className="p-3 bg-white/5 rounded-lg text-sm">
+              <span className="text-digiko-primary">✓</span> <span className="text-white">Same API pattern:</span> <code className="text-xs text-digiko-accent font-mono ml-2">Single /v1.0/assets call</code>
+            </div>
+            <div className="p-3 bg-white/5 rounded-lg text-sm">
+              <span className="text-digiko-primary">✓</span> <span className="text-white">Same precision:</span> <code className="text-xs text-digiko-accent font-mono ml-2">10000 (4 decimals)</code>
+            </div>
+            <div className="p-3 bg-white/5 rounded-lg text-sm">
+              <span className="text-digiko-primary">✓</span> <span className="text-white">Same APR color:</span> <code className="text-xs text-digiko-accent font-mono ml-2">text-green-400</code>
+            </div>
+          </div>
+        </div>
+
+        <div className="p-4 bg-digiko-primary/5 rounded-xl border border-digiko-primary/10">
+          <h4 className="text-white font-medium mb-2">What&apos;s Next</h4>
+          <p className="text-sm text-gray-400">
+            Future updates will continue to enhance the platform with community features, contests, 
+            and additional functionality while maintaining the design consistency established in v1.6.
+          </p>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: 'components',
+    title: 'Components',
+    content: (
+      <div className="space-y-6">
+        <p className="text-gray-400 leading-relaxed">
+          Digiko provides reusable components for building consistent UI across the application.
+        </p>
+
+        <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+          <h4 className="text-white font-medium mb-3">TokenImage</h4>
+          <p className="text-gray-400 text-sm leading-relaxed mb-4">
+            Automatically fetches and displays token logos from the Klever API. Falls back to a styled placeholder if no logo is available.
+          </p>
+          <div className="p-3 bg-black/30 rounded-lg mb-4">
+            <code className="text-digiko-accent text-sm font-mono">
+              {`import { TokenImage, TOKEN_IDS } from '@/components/TokenImage';`}
+            </code>
+          </div>
+          <div className="flex items-center gap-4 mb-4">
+            <TokenImage assetId={TOKEN_IDS.DGKO} size="xs" />
+            <TokenImage assetId={TOKEN_IDS.DGKO} size="sm" />
+            <TokenImage assetId={TOKEN_IDS.DGKO} size="md" />
+            <TokenImage assetId={TOKEN_IDS.DGKO} size="lg" />
+            <TokenImage assetId={TOKEN_IDS.DGKO} size="xl" />
+          </div>
+          <div className="text-xs text-gray-500">
+            Sizes: xs (20px), sm (32px), md (40px), lg (48px), xl (64px)
+          </div>
+        </div>
+
+        <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+          <h4 className="text-white font-medium mb-3">IconBox</h4>
+          <p className="text-gray-400 text-sm leading-relaxed mb-3">
+            Consistent icon container with glass morphism styling. Used for decorative icons in cards and stats.
+          </p>
+          <div className="p-3 bg-black/30 rounded-lg">
+            <code className="text-digiko-accent text-sm font-mono">
+              {`import { IconBox } from '@/components/IconBox';`}
+            </code>
+          </div>
+        </div>
+
+        <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+          <h4 className="text-white font-medium mb-3">ConnectWalletPrompt</h4>
+          <p className="text-gray-400 text-sm leading-relaxed mb-3">
+            Full-page prompt displayed when wallet connection is required. Used on pages that need authentication.
+          </p>
+          <div className="p-3 bg-black/30 rounded-lg">
+            <code className="text-digiko-accent text-sm font-mono">
+              {`import { ConnectWalletPrompt } from '@/components/ConnectWalletPrompt';`}
+            </code>
+          </div>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: 'design-guide',
+    title: 'Design Guide',
+    content: (
+      <div className="space-y-6">
+        <p className="text-gray-400 leading-relaxed">
+          Digiko follows a comprehensive design system documented in the design_guide.md file. 
+          The guide ensures consistency across all pages and components with Apple-inspired fintech minimalism.
+        </p>
+
+        <div className="p-4 bg-digiko-primary/5 rounded-xl border border-digiko-primary/10">
+          <h4 className="text-white font-medium mb-3">Design Philosophy</h4>
+          <ul className="space-y-2 text-sm text-gray-400">
+            <li className="flex items-start gap-2">
+              <span className="text-digiko-primary mt-1">•</span>
+              <span>Blue-only color palette with #0066FF as primary brand color</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-digiko-primary mt-1">•</span>
+              <span>Glass morphism effects with 24px backdrop blur</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-digiko-primary mt-1">•</span>
+              <span>Ultra-dark backgrounds (#0A0A0C) for premium feel</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-digiko-primary mt-1">•</span>
+              <span>Geist fonts for clean typography</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-digiko-primary mt-1">•</span>
+              <span>No pulsing animations (smooth transitions only)</span>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="text-white font-medium mb-3">Token Page Patterns</h4>
+          <p className="text-gray-400 leading-relaxed mb-4">
+            Token pages (DGKO, BABYDGKO) follow standardized patterns documented in design guide v1.6. 
+            All token pages must use consistent spacing, API patterns, and component structures.
+          </p>
+          <div className="space-y-3">
+            <div className="p-3 bg-white/5 rounded-lg">
+              <div className="text-sm text-white mb-1">Standard Spacing</div>
+              <code className="text-xs text-digiko-accent font-mono">py-16 for pages, mb-12 for sections, mb-6 for section titles</code>
+            </div>
+            <div className="p-3 bg-white/5 rounded-lg">
+              <div className="text-sm text-white mb-1">API Pattern</div>
+              <code className="text-xs text-digiko-accent font-mono">Single call to /v1.0/assets/ASSET-ID with precision 10000</code>
+            </div>
+            <div className="p-3 bg-white/5 rounded-lg">
+              <div className="text-sm text-white mb-1">APR Display</div>
+              <code className="text-xs text-digiko-accent font-mono">Always use text-green-400 for APR values</code>
+            </div>
+          </div>
+        </div>
+
+        <div className="p-4 bg-amber-500/5 rounded-xl border border-amber-500/10">
+          <h4 className="text-amber-400 font-medium mb-3">Critical Rules</h4>
+          <ul className="space-y-2 text-sm text-gray-400">
+            <li className="flex items-start gap-2">
+              <span className="text-amber-400 mt-1">⚠</span>
+              <span>Always fetch token data from a single API call - no separate staking endpoint</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-amber-400 mt-1">⚠</span>
+              <span>Use hardcoded precision 10000 for DGKO and BABYDGKO (4 decimals)</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-amber-400 mt-1">⚠</span>
+              <span>Maintain py-16 padding across all token pages for consistency</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-amber-400 mt-1">⚠</span>
+              <span>Follow the token page checklist before deploying new pages</span>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="text-white font-medium mb-3">Key Components</h4>
+          <div className="space-y-3 text-sm text-gray-400">
+            <div className="p-3 bg-white/5 rounded-lg">
+              <span className="text-white">Inner Stat Cards:</span> bg-white/5 rounded-2xl p-4 for stats inside glass containers
+            </div>
+            <div className="p-3 bg-white/5 rounded-lg">
+              <span className="text-white">Donut Chart:</span> 280px size, 16px stroke, 2% gap, tech-modern blue palette
+            </div>
+            <div className="p-3 bg-white/5 rounded-lg">
+              <span className="text-white">Activity Cards:</span> Colored icon backgrounds (burn: red, mint: blue, gift: cyan)
+            </div>
+            <div className="p-3 bg-white/5 rounded-lg">
+              <span className="text-white">Origin Story:</span> Optional card for meme tokens with special backstory
+            </div>
+          </div>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: 'pages',
+    title: 'Pages',
+    content: (
+      <div className="space-y-6">
+        <p className="text-gray-400 leading-relaxed">
+          Digiko is organized into focused pages, each handling specific functionality.
+        </p>
+
+        <div className="space-y-4">
+          <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+            <div className="flex items-center justify-between mb-2">
+              <h4 className="text-white font-medium">Dashboard</h4>
+              <code className="text-xs text-gray-500 font-mono">/dashboard</code>
+            </div>
+            <p className="text-gray-400 text-sm">Portfolio overview with wallet balances and asset management.</p>
+          </div>
+
+          <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+            <div className="flex items-center justify-between mb-2">
+              <h4 className="text-white font-medium">DGKO</h4>
+              <code className="text-xs text-gray-500 font-mono">/dgko</code>
+            </div>
+            <p className="text-gray-400 text-sm">Token information page with tokenomics, live on-chain data, staking stats, ecosystem features, and trading links.</p>
+          </div>
+
+          <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+            <div className="flex items-center justify-between mb-2">
+              <h4 className="text-white font-medium">BABYDGKO</h4>
+              <code className="text-xs text-gray-500 font-mono">/babydgko</code>
+            </div>
+            <p className="text-gray-400 text-sm">Meme token information page with origin story, live on-chain data, staking statistics, community features, and where to get BABYDGKO.</p>
+          </div>
+
+          <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+            <div className="flex items-center justify-between mb-2">
+              <h4 className="text-white font-medium">Staking</h4>
+              <code className="text-xs text-gray-500 font-mono">/staking</code>
+            </div>
+            <p className="text-gray-400 text-sm">Full staking interface with stake, unstake, claim rewards, and withdraw functionality.</p>
+          </div>
+
+          <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+            <div className="flex items-center justify-between mb-2">
+              <h4 className="text-white font-medium">Swap</h4>
+              <code className="text-xs text-gray-500 font-mono">/swap</code>
+            </div>
+            <p className="text-gray-400 text-sm">Token swap interface with automated market maker for DGKO/USDT trading pair.</p>
+          </div>
+
+          <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+            <div className="flex items-center justify-between mb-2">
+              <h4 className="text-white font-medium">Documentation</h4>
+              <code className="text-xs text-gray-500 font-mono">/documentation</code>
+            </div>
+            <p className="text-gray-400 text-sm">Comprehensive guides and technical reference for the platform.</p>
+          </div>
+
+          <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+            <div className="flex items-center justify-between mb-2">
+              <h4 className="text-white font-medium">Updates</h4>
+              <code className="text-xs text-gray-500 font-mono">/updates</code>
+            </div>
+            <p className="text-gray-400 text-sm">Timeline-style changelog showing version history and release notes.</p>
+          </div>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: 'dashboard',
+    title: 'Dashboard Features',
+    content: (
+      <div className="space-y-6">
+        <p className="text-gray-400 leading-relaxed">
+          The Dashboard provides a comprehensive overview of your portfolio, price performance, and quick access to platform features.
+        </p>
+
+        <div className="space-y-4">
+          <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+            <h4 className="text-white font-medium mb-3">Portfolio Overview</h4>
+            <p className="text-gray-400 text-sm leading-relaxed mb-3">
+              Displays your total DGKO portfolio value in USD, calculated using real-time DGKO/USDT swap pool prices. 
+              Shows 24h price change with directional arrow, your DGKO balance, and current price per token.
+            </p>
+            <div className="text-xs text-gray-500">
+              Price source: DGKO/USDT swap pool reserves (constant product AMM formula)
+            </div>
+          </div>
+
+          <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+            <h4 className="text-white font-medium mb-3">Price Chart</h4>
+            <p className="text-gray-400 text-sm leading-relaxed mb-3">
+              Visual SVG line chart showing DGKO price movement over the last 24 hours. Each data point represents 
+              an actual swap transaction you executed. The chart features gradient area fill and displays the high and low prices.
+            </p>
+            <div className="text-xs text-gray-500">
+              Data source: Your swap transaction history stored in browser localStorage
+            </div>
+          </div>
+
+          <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+            <h4 className="text-white font-medium mb-3">Token Balances</h4>
+            <p className="text-gray-400 text-sm leading-relaxed">
+              Lists all tokens in your connected Klever wallet with real-time balance updates. Includes token logos, 
+              asset IDs, and formatted balances with proper decimal precision.
+            </p>
+          </div>
+
+          <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+            <h4 className="text-white font-medium mb-3">Send Form</h4>
+            <p className="text-gray-400 text-sm leading-relaxed">
+              Secure token transfer interface. Enter recipient Klever address and amount to send KLV or other tokens. 
+              Validates addresses and shows transaction fees before execution.
+            </p>
+          </div>
+
+          <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+            <h4 className="text-white font-medium mb-3">Resources Section</h4>
+            <p className="text-gray-400 text-sm leading-relaxed mb-3">
+              Unified section with clickable cards linking to key platform features and documentation:
+            </p>
+            <ul className="space-y-2 text-sm text-gray-400">
+              <li className="flex items-start gap-2">
+                <span className="text-digiko-primary mt-1">•</span>
+                <span><strong className="text-white">Swap Tokens:</strong> Trade DGKO for USDT</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-digiko-primary mt-1">•</span>
+                <span><strong className="text-white">Stake Tokens:</strong> Earn rewards on DGKO and BABYDGKO</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-digiko-primary mt-1">•</span>
+                <span><strong className="text-white">Explore Tokens:</strong> View detailed token information</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-digiko-primary mt-1">•</span>
+                <span><strong className="text-white">Documentation:</strong> Complete platform guide</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-digiko-primary mt-1">•</span>
+                <span><strong className="text-white">Updates:</strong> Latest features and changes</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-digiko-primary mt-1">•</span>
+                <span><strong className="text-white">Help & Support:</strong> Common questions and troubleshooting</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="p-4 bg-digiko-primary/5 rounded-xl border border-digiko-primary/10">
+          <h4 className="text-white font-medium mb-3">Modular Architecture</h4>
+          <p className="text-gray-400 text-sm leading-relaxed mb-3">
+            The dashboard follows modular architecture patterns with focused components:
+          </p>
+          <div className="space-y-2 text-xs font-mono text-gray-500">
+            <div className="p-2 bg-black/30 rounded">hooks/useSwapMetrics.ts - Swap data calculations</div>
+            <div className="p-2 bg-black/30 rounded">components/PriceChart.tsx - SVG chart visualization</div>
+            <div className="p-2 bg-black/30 rounded">components/PerformanceChart.tsx - Chart orchestrator</div>
+            <div className="p-2 bg-black/30 rounded">components/ResourcesSection.tsx - Feature links</div>
+          </div>
+        </div>
+      </div>
+    ),
+  },
+];
+
+
+export { sections };

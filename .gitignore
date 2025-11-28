@@ -1,0 +1,37 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# next.js
+/.next/
+/out/
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+
+# local env files
+.env*.local
+.env
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# Rust/Contract build artifacts - EXCLUDE ALL
+contract/target/
+contract/meta/target/
+contract/wasm/target/
+contract/output/
+*.wasm
+*.o
+*.rlib
+*.rmeta
+*.d

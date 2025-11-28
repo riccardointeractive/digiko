@@ -1,0 +1,6 @@
+[settings]
+main = "digiko-swap"
+
+[contracts.digiko-swap]
+name = "digiko-swap"
+add-unlabelled = true
