@@ -2,9 +2,6 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { KleverProvider } from "@/context/KleverContext";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import { ErrorProvider } from "@/context/ErrorContext";
 
 export const dynamic = 'force-dynamic';
 
@@ -35,11 +32,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <KleverProvider>
-          <ErrorProvider>
-            <Header />
-            {children}
-            <Footer />
-          </ErrorProvider>
+          {children}
         </KleverProvider>
       </body>
     </html>
