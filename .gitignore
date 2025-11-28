@@ -71,3 +71,8 @@ coverage/
 
 # Vercel
 .vercel
+
+next-env.d.ts
+kleverSDK/
+kleverchain.workspace.json
+contract/kleverchain.workspace.json

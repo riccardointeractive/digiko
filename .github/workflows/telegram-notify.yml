@@ -1,0 +1,31 @@
+name: Telegram Release Notification
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Send Telegram notification
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_THREAD_ID: ${{ secrets.TELEGRAM_THREAD_ID }}
+        run: |
+          COMMIT_MSG=$(git log -1 --pretty=%B)
+          HEADER="🚀 Digiko Updated!"
+          NEWLINE=$'\n'
+          FULL_TEXT="${HEADER}${NEWLINE}${NEWLINE}${COMMIT_MSG}"
+          curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
+            --data-urlencode "message_thread_id=${TELEGRAM_THREAD_ID}" \
+            --data-urlencode "parse_mode=HTML" \
+            --data-urlencode "text=${FULL_TEXT}"
