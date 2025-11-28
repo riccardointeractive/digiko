@@ -1,37 +1,73 @@
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
+# Dependencies
+node_modules/
 
-# next.js
-/.next/
-/out/
+# Next.js
+.next/
+out/
 
-# misc
-.DS_Store
-*.pem
+# Production
+/build
 
-# debug
+# Environment variables
+.env*
+!.env.example
+
+# Debug
 npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
 
-# local env files
-.env*.local
+# Local env files
 .env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
-# vercel
-.vercel
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
 
-# typescript
-*.tsbuildinfo
-next-env.d.ts
+# Temporary files
+temp/
+z_code_snippets
 
-# Rust/Contract build artifacts - EXCLUDE ALL
+# Internal docs (not for git)
+INTERNAL_DEV_DOCS.md
+
+# Build artifacts
+tsconfig.tsbuildinfo
+
+# CRITICAL: Contract build artifacts
+# These directories can reach 300+ MB and will cause deployment failures
+# ⚠️ DO NOT COMMIT THESE - they are generated from source
 contract/target/
 contract/meta/target/
 contract/wasm/target/
-contract/output/
-*.wasm
+contract/output/*.wasm
+
+# Rust build artifacts (individual files)
+# These accumulate quickly: .o files, compiled libraries, metadata
 *.o
 *.rlib
 *.rmeta
 *.d
+
+# Cargo lock for contracts (regenerated)
+contract/wasm/Cargo.lock
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Testing
+coverage/
+.nyc_output/
+
+# Vercel
+.vercel

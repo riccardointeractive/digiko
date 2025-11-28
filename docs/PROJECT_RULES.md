@@ -168,24 +168,227 @@ Then provide short human-readable summary of changes matching commit log.
 
 **CRITICAL:** Clear `.next` cache after structural changes (new directories, moved files), component refactors, config changes, any "missing required error components" message
 
-## RULE 22: CONFIGURATION FILE EXTENSIONS
+## RULE 22: DEPLOYMENT RULES
+
+### Git Repository Management
+**NEVER commit contract build artifacts:**
+- `contract/target/` - Can reach 300+ MB
+- `contract/meta/target/` - Rust build artifacts
+- `contract/wasm/target/` - WASM build outputs
+- `*.o`, `*.rlib`, `*.rmeta`, `*.d` - Individual build files
+
+**Check git size before EVERY push:**
+```bash
+git count-objects -vH
+```
+- **Good:** <10 MB
+- **Warning:** 10-50 MB (investigate what's bloating)
+- **Critical:** >50 MB (use nuclear reset procedure)
+
+**If push fails with HTTP 400 or >100 MB:**
+1. **DO NOT** try incremental fixes
+2. Go directly to `docs/dev/GIT_NUCLEAR_RESET.md`
+3. Follow procedure exactly
+4. This is the ONLY reliable fix
+
+**Configure .gitignore BEFORE first cargo build:**
+```bash
+# CRITICAL contract exclusions
+contract/target/
+contract/meta/target/
+contract/wasm/target/
+*.o
+*.rlib
+*.rmeta
+*.d
+```
+
+### Next.js + Web3 Requirements
+
+**Force dynamic rendering everywhere:**
+
+1. **Root layout** (`src/app/layout.tsx`):
+```typescript
+export const dynamic = 'force-dynamic';
+```
+
+2. **ALL API routes** (`src/app/api/*/route.ts`):
+```typescript
+export const dynamic = 'force-dynamic';
+
+export async function GET(request: NextRequest) {
+  const searchParams = request.nextUrl.searchParams;
+  // ...
+}
+```
+
+**Why:** Web3 apps require runtime features:
+- `useSearchParams()` needs actual URL
+- Wallet connections need browser
+- `localStorage` doesn't exist server-side
+- API routes with searchParams need runtime request
+
+**Without force-dynamic, expect:**
+- ⚠️ `useSearchParams() should be wrapped in suspense boundary`
+- ⚠️ `Route couldn't be rendered statically`
+- ⚠️ `localStorage is not defined`
+
+### Type Safety Rules
+
+**Klever context returns `string | null`:**
+```typescript
+const { address } = useKlever(); // string | null
+
+// ❌ Wrong - type error
+userAddress: address
+
+// ✅ Correct - explicit conversion
+userAddress: address || undefined
+```
+
+**Why this matters:**
+- TypeScript strict mode treats null and undefined as distinct
+- Never use type casting (`as`) to bypass this
+- Use `|| undefined` for null-to-undefined conversion
+
+### TypeScript Configuration
+
+**Always exclude non-source directories:**
+```json
+{
+  "exclude": ["node_modules", "docs/**/*", "contract/**/*", "temp/**/*"]
+}
+```
+
+**Why:** Prevents TypeScript from compiling:
+- Documentation examples
+- Contract source code
+- Temporary files
+
+### Font Management
+
+**Use geist npm package, NOT local files:**
+```bash
+npm install geist
+```
+
+```typescript
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
+```
+
+**Why:**
+- Fonts tracked in package.json
+- No local files to remember to commit
+- Automatic updates
+- Self-hosted (not CDN)
+
+### Pre-Deployment Checklist
+
+Before `git push`:
+
+1. **Check git size:**
+```bash
+git count-objects -vH
+# Must be <10 MB
+```
+
+2. **Verify force-dynamic present:**
+```bash
+grep -r "export const dynamic" src/app/
+# Must see layout.tsx and all API routes
+```
+
+3. **Test build locally:**
+```bash
+npm run build
+# Must complete without errors
+```
+
+4. **Check what's being committed:**
+```bash
+git status
+# Should NOT see: target/, node_modules/, .next/
+```
+
+### Build Failure Cascade
+
+**Fix errors in this order:**
+
+1. **Layer 1: Compilation**
+   - Missing imports
+   - Missing files (fonts)
+   - Syntax errors
+
+2. **Layer 2: Type Checking**
+   - null vs undefined
+   - Interface mismatches
+
+3. **Layer 3: Static Generation**
+   - useSearchParams errors
+   - API route static errors
+   - localStorage SSR errors
+
+4. **Layer 4: Runtime**
+   - Browser-only features
+
+**Each layer reveals the next.** Don't try to fix Layer 3 before Layer 1!
+
+### Emergency Procedures
+
+**Build fails:**
+1. Read ENTIRE error message
+2. Check `docs/dev/DEPLOYMENT_TROUBLESHOOTING.md`
+3. Apply solution
+4. Test locally: `npm run build`
+5. Push fix
+
+**Git push fails (>100 MB):**
+1. Use `docs/dev/GIT_NUCLEAR_RESET.md`
+2. Do NOT try incremental fixes
+3. Nuclear reset is the ONLY reliable solution
+
+**Deployment succeeds but site broken:**
+1. Check browser console
+2. Likely: Missing environment variables
+3. Verify Vercel env vars match local `.env`
+
+### Related Documentation
+
+- `docs/dev/DEPLOYMENT_TROUBLESHOOTING.md` - Complete failure catalog
+- `docs/dev/GIT_NUCLEAR_RESET.md` - Emergency git cleanup
+- `.gitignore` - Properly configured exclusions
+
+### Success Metrics
+
+**v1.1.0 Deployment (November 28, 2024):**
+- 12 failed builds before success
+- 9 different failure modes encountered
+- 311 MB → 435 KB (99.86% reduction)
+- All failures documented for future prevention
+
+**Future deployments should be:**
+- 1 attempt, <15 minutes
+- This documentation makes it possible
+
+## RULE 23: CONFIGURATION FILE EXTENSIONS
 Config with JSX equals `.tsx` extension ALWAYS
 
 **Example:** `dashboard.config.tsx` (contains SVG icons)  
 **Example:** `swap.config.tsx` (contains JSX elements)
 
-## RULE 23: FILE SIZE GUIDELINES
+## RULE 24: FILE SIZE GUIDELINES
 - Main page files should be 50-200 lines (orchestrator only)
 - Extract components when files exceed 200 lines
 - Break down complex logic into focused hooks
 
-## RULE 24: TROUBLESHOOTING MULTIPLE DEV SERVERS
+## RULE 25: TROUBLESHOOTING MULTIPLE DEV SERVERS
 If you see "Port 3000 is in use, trying 3001..." or get 404 errors:
 
 1. Kill all Next.js processes first: `pkill -f next`
 2. Then start fresh: `rm -rf .next` then `npm run dev`
 
-## RULE 25: VERSION DISPLAY TESTING
+## RULE 26: VERSION DISPLAY TESTING
 After updating version in `src/config/app.ts`, verify it appears correctly in:
 - Navigation header
 - Footer
@@ -194,7 +397,7 @@ After updating version in `src/config/app.ts`, verify it appears correctly in:
 - Mobile menu
 - Desktop More menu
 
-## RULE 26: UNNECESSARY COMPUTER USE AVOIDANCE
+## RULE 27: UNNECESSARY COMPUTER USE AVOIDANCE
 Claude should not use computer tools when:
 - Answering factual questions from Claude's training knowledge
 - Summarizing content already provided in conversation
@@ -567,3 +770,102 @@ git push
 ```
 
 Testing complete!
+
+## RULE 28: NO NESTED ZIPS - CRITICAL
+
+**DANGER:** Zipping with parent directory creates nested structure when unzipping!
+
+### The Problem:
+```bash
+# ❌ WRONG - Creates nested structure
+cd /home/claude
+zip -r package.zip digiko-web3-app/file.txt
+
+# When user runs:
+cd /Users/riccardomarconato/digiko-web3-app
+unzip package.zip
+# Result: digiko-web3-app/digiko-web3-app/file.txt ❌❌❌
+```
+
+### The Solution:
+```bash
+# ✅ CORRECT - Zip from inside directory
+cd /home/claude/digiko-web3-app
+zip -r package.zip file.txt
+
+# When user runs:
+cd /Users/riccardomarconato/digiko-web3-app
+unzip -o ~/Downloads/package.zip
+# Result: digiko-web3-app/file.txt ✅
+```
+
+### Mandatory Zip Procedure:
+
+**ALWAYS use this pattern:**
+```bash
+cd /home/claude/digiko-web3-app
+zip -r /home/claude/output-name.zip relative/path/to/files
+cp /home/claude/output-name.zip /mnt/user-data/outputs/
+```
+
+**NEVER include parent directory in zip path!**
+
+### Unzip Commands for User:
+
+**Single file update:**
+```bash
+cd /Users/riccardomarconato/digiko-web3-app
+unzip -o ~/Downloads/filename.zip
+```
+
+**Multiple files update:**
+```bash
+cd /Users/riccardomarconato/digiko-web3-app
+unzip -o ~/Downloads/filename.zip
+```
+
+### Emergency: Remove Nested Directory
+
+If nesting happens:
+```bash
+cd /Users/riccardomarconato/digiko-web3-app
+rm -rf digiko-web3-app  # Remove nested directory
+# Then apply files correctly
+```
+
+### Verification:
+
+After creating zip, Claude should state:
+```bash
+# Zip created from: /home/claude/digiko-web3-app
+# Contains: [list of relative paths]
+# Unzip with: cd /Users/riccardomarconato/digiko-web3-app && unzip -o ~/Downloads/filename.zip
+```
+
+**This prevents the deadly double-nesting that caused deployment failures.**
+
+## RULE 29: NO COMMENTS IN BASH BLOCKS
+
+User copy-pastes bash commands directly into terminal without reading.
+
+Comments with # break commands when copy-pasted.
+
+NEVER include comments inside bash code blocks.
+
+Wrong:
+```bash
+git add .
+git commit -m "message"
+git push
+```
+
+Correct:
+```bash
+git add .
+git commit -m "message"
+git push
+```
+
+If explanation needed, write it OUTSIDE the code block.
+
+All bash commands must be copy-paste ready with zero edits required.
