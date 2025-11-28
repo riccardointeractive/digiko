@@ -165,7 +165,7 @@ export function MobileMenu() {
               {/* Bottom section with app info */}
               <div className="px-4 py-3 border-t border-white/5 bg-white/[0.02]">
                 <div className="flex items-center justify-between text-xs text-gray-500">
-                  <span>{APP_CONFIG.name} {APP_CONFIG.status}</span>
+                  <span>{APP_CONFIG.name} v{APP_CONFIG.version} {APP_CONFIG.status}</span>
                   <span className="flex items-center gap-1.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-green-500"></span>
                     {APP_CONFIG.network}

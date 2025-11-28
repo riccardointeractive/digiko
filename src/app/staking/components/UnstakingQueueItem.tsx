@@ -102,7 +102,7 @@ export function UnstakingQueueItem({
           <div className="space-y-2">
             <div className="flex justify-between text-xs font-semibold">
               <span className="text-gray-400">Progress</span>
-              <span className="text-digiko-accent">{Math.round(progress)}%</span>
+              <span className="text-white">{Math.round(progress)}%</span>
             </div>
             <div className="relative h-2.5 bg-gray-800/50 rounded-full overflow-hidden backdrop-blur-xl border border-white/5">
               <div

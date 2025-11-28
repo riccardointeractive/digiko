@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
 
   try {
     console.log('Fetching account data for:', address);
-    const response = await fetch(`https://api.klever.org/v1.0/address/${address}`);
+    const response = await fetch(`https://api.mainnet.klever.org/v1.0/address/${address}`);
     
     if (!response.ok) {
       console.error('❌ Error in account API route:', new Error(`API responded with status: ${response.status}`));

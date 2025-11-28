@@ -50,6 +50,19 @@ module.exports = {
         sans: ['var(--font-geist-sans)', 'system-ui', 'sans-serif'],
         mono: ['var(--font-geist-mono)', 'monospace'],
       },
+      fontSize: {
+        // Mobile-optimized font sizes
+        'mobile-xs': ['0.625rem', { lineHeight: '1rem' }],      // 10px
+        'mobile-sm': ['0.75rem', { lineHeight: '1.125rem' }],    // 12px
+        'mobile-base': ['0.875rem', { lineHeight: '1.375rem' }], // 14px
+        'mobile-lg': ['1rem', { lineHeight: '1.5rem' }],         // 16px
+        'mobile-xl': ['1.125rem', { lineHeight: '1.75rem' }],    // 18px
+        'mobile-2xl': ['1.25rem', { lineHeight: '1.875rem' }],   // 20px
+        'mobile-3xl': ['1.5rem', { lineHeight: '2rem' }],        // 24px
+        'mobile-4xl': ['1.75rem', { lineHeight: '2.25rem' }],    // 28px
+        'mobile-5xl': ['2rem', { lineHeight: '2.5rem' }],        // 32px
+        'mobile-6xl': ['2.5rem', { lineHeight: '3rem' }],        // 40px
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',

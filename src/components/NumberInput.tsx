@@ -72,7 +72,7 @@ export function NumberInput({
     <div className={`flex gap-2 ${className}`}>
       {/* Main Input Container */}
       <div className="flex-1 relative">
-        <div className="flex items-center gap-2 px-4 py-3 bg-klever-dark rounded-xl border border-gray-700 focus-within:ring-2 focus-within:ring-digiko-primary transition-all duration-300">
+        <div className="flex items-center gap-2 px-4 py-3 bg-klever-dark rounded-xl border border-gray-700 focus-within:border-digiko-primary transition-all duration-300">
           {/* Input Field - Hide default spinners */}
           <input
             type="number"
@@ -80,7 +80,10 @@ export function NumberInput({
             onChange={handleInputChange}
             placeholder={placeholder}
             disabled={disabled}
-            className="flex-1 bg-transparent text-white font-mono text-lg outline-none
+            className="flex-1 bg-transparent text-white font-mono text-xl font-medium 
+                     outline-none focus:outline-none focus-visible:outline-none
+                     focus:ring-0 focus:border-0
+                     placeholder:text-gray-500
                      /* Hide number input spinners */
                      [appearance:textfield] 
                      [&::-webkit-outer-spin-button]:appearance-none 

@@ -32,9 +32,9 @@ export function StakeCard({
   };
 
   return (
-    <div className="glass rounded-3xl p-8 border border-white/10">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-medium text-white">Stake</h2>
+    <div className="glass rounded-3xl p-5 md:p-8 border border-white/10">
+      <div className="flex items-center justify-between mb-4 md:mb-6">
+        <h2 className="text-responsive-h3 text-white">Stake</h2>
         <button
           onClick={onRefresh}
           disabled={isLoading}
@@ -47,23 +47,33 @@ export function StakeCard({
         </button>
       </div>
       
-      <div className="space-y-4 mb-6">
+      <div className="space-y-4 mb-4 md:mb-6">
         <div className="flex justify-between items-center p-4 bg-klever-dark rounded-xl">
           <span className="text-gray-400">Available</span>
-          <span className="text-xl font-mono font-medium text-white">
-            {availableBalance} {selectedToken}
-          </span>
+          <div className="flex items-baseline gap-2 flex-wrap">
+            <span className="balance-display font-mono text-white">
+              {availableBalance}
+            </span>
+            <span className="token-name-mobile text-gray-400">
+              {selectedToken}
+            </span>
+          </div>
         </div>
         
         <div className="flex justify-between items-center p-4 bg-klever-dark rounded-xl">
           <span className="text-gray-400">Staked</span>
-          <span className="text-xl font-mono font-medium text-digiko-accent">
-            {stakedBalance} {selectedToken}
-          </span>
+          <div className="flex items-baseline gap-2 flex-wrap">
+            <span className="balance-display font-mono text-white">
+              {stakedBalance}
+            </span>
+            <span className="token-name-mobile text-gray-400">
+              {selectedToken}
+            </span>
+          </div>
         </div>
       </div>
 
-      <div className="mb-6">
+      <div className="mb-4 md:mb-6">
         <label className="block text-white font-medium mb-2">Amount to Stake</label>
         <NumberInput
           value={stakeAmount}

@@ -1966,3 +1966,448 @@ This rules document is living and evolving.
 ---
 
 These rules should be appended to docs/PROJECT_RULES.md
+
+---
+
+## RULE 40: MOBILE-FIRST RESPONSIVE DESIGN (Nov 28, 2025)
+
+Always design and develop mobile-first, then enhance for desktop.
+
+### Required Responsive Classes
+Every component MUST use responsive spacing and typography:
+
+```tsx
+// ✅ CORRECT - Mobile-first
+className="p-4 md:p-8 gap-4 md:gap-8 text-responsive-h1"
+
+// ❌ WRONG - Desktop-only
+className="p-8 gap-8 text-5xl"
+```
+
+### Responsive Spacing Standards
+Follow fintech industry standards (Revolut, Coinbase):
+- **Mobile:** 16px padding (p-4), 16px gaps (gap-4)
+- **Desktop:** 32px padding (md:p-8), 32px gaps (md:gap-8)
+- **Reduction:** ~40% less spacing on mobile
+
+### Typography Scale
+Use `text-responsive-*` utilities for all headings:
+- `text-responsive-h1` - Page titles
+- `text-responsive-h2` - Section titles  
+- `text-responsive-h3` - Card titles
+- `balance-display` - Number displays
+- `token-name-mobile` - Token symbols
+
+### Testing Requirements
+Every component must be tested at:
+1. **375px** (iPhone SE) - Minimum width
+2. **390px** (iPhone 12/13) - Most common
+3. **430px** (iPhone 14 Pro Max) - Large mobile
+4. **768px** (iPad) - Tablet
+5. **1440px** (Desktop) - Standard desktop
+
+**Never merge untested mobile changes.**
+
+---
+
+## RULE 41: TEXT COLOR MINIMALISM (Nov 28, 2025)
+
+Use color functionally, not decoratively.
+
+### Color Usage Rules
+**Informational text (amounts, labels, data):**
+- `text-white` - Primary values, amounts
+- `text-gray-400` - Labels, symbols
+- `text-gray-500` - Secondary info
+
+**Interactive elements only:**
+- `text-digiko-primary` - Links, buttons, CTAs
+- `hover:text-digiko-accent` - Hover states
+
+**State indicators:**
+- `text-green-400` - Success/positive
+- `text-red-400` - Error/negative  
+- `text-yellow-400` - Warning/pending
+
+### What NOT To Color
+❌ Don't use blue/accent colors for:
+- Token balances or staked amounts
+- Token names/symbols
+- Progress percentages
+- Static informational text
+
+**If text is not interactive, it should be white or gray.**
+
+---
+
+## RULE 42: BALANCE DISPLAY PATTERN (Nov 28, 2025)
+
+Numbers and symbols must follow this hierarchy.
+
+### Required Pattern
+```tsx
+<div className="flex items-baseline gap-2 flex-wrap">
+  {/* Number - LARGER */}
+  <span className="balance-display font-mono text-white">
+    {amount}
+  </span>
+  
+  {/* Symbol - SMALLER */}
+  <span className="token-name-mobile text-gray-400">
+    {symbol}
+  </span>
+</div>
+```
+
+### Critical Rules
+1. **Always use `flex-wrap`** - Prevents overflow on long names
+2. **Number is larger** - balance-display (18-20px) > token-name-mobile (14px)
+3. **Monospace for numbers** - `font-mono` for tabular alignment
+4. **Color hierarchy** - White numbers, gray symbols
+
+### Long Token Names
+For tokens like BABYDGKO that can overflow:
+```tsx
+<h1 className="text-responsive-h1 flex flex-wrap items-baseline gap-2">
+  <span className="break-mobile">BABYDGKO</span>
+  <span className="text-responsive-xl text-gray-400">Token</span>
+</h1>
+```
+
+---
+
+## RULE 43: FOCUS STATE HANDLING (Nov 28, 2025)
+
+Global focus styles require component-specific overrides.
+
+### The Problem
+Global `*:focus-visible` styles create unwanted outlines inside inputs.
+
+### The Solution
+**Inputs:** Suppress all outlines
+```tsx
+<input className="
+  outline-none 
+  focus:outline-none 
+  focus-visible:outline-none
+  focus:ring-0
+  focus:border-0
+" />
+```
+
+**Wrappers:** Show focus state
+```tsx
+<div className="
+  border border-white/10
+  focus-within:border-digiko-primary
+  transition-colors
+">
+  <input ... />
+</div>
+```
+
+### Pattern Rule
+Let containers handle focus states, suppress on inputs.
+
+---
+
+## RULE 44: ITERATIVE VISUAL REFINEMENT (Nov 28, 2025)
+
+Visual issues require screenshot-based iteration.
+
+### Workflow
+1. User provides **screenshot** of issue
+2. Identify **specific visual problem**
+3. Make **focused fix** (one issue at a time)
+4. Create **new version** 
+5. User tests and provides feedback
+6. Repeat until polished
+
+### Version Discipline
+Each visual fix = new version:
+- v1.1.1 - Typography fix
+- v1.1.2 - Focus state fix
+- v1.1.3 - Color cleanup
+- v1.1.4 - Spacing optimization
+- v1.1.5 - Layout centering
+
+**Never combine unrelated visual fixes in one version.**
+
+### Documentation Requirement
+Each visual iteration requires:
+- Clear changelog entry
+- Before/after description
+- Screenshot reference (if provided)
+- Testing verification
+
+---
+
+## RULE 45: MOBILE LAYOUT PATTERNS (Nov 28, 2025)
+
+Different content types require different mobile layouts.
+
+### Center on Mobile, Left on Desktop
+**Use for:**
+- Feature cards with icons
+- "How It Works" sections
+- Marketing/informational content
+
+```tsx
+<div className="text-center md:text-left">
+  <div className="flex justify-center md:justify-start mb-6">
+    <IconBox ... />
+  </div>
+  <h3 className="font-medium text-white">Title</h3>
+  <p className="text-gray-400">Description</p>
+</div>
+```
+
+### Always Left-Aligned
+**Use for:**
+- Data tables
+- Transaction lists
+- Code/monospace content
+- Forms and inputs
+
+### Always Centered
+**Use for:**
+- Page titles (sometimes)
+- Empty states
+- Loading states
+- Error messages
+
+### Pattern Selection
+Ask: "Is this content **informational** (center) or **functional** (left)?"
+
+---
+
+## RULE 46: DEBUG TOOLS ARE PRODUCTION CODE (Nov 28, 2025)
+
+Debug features must be production-ready and user-accessible.
+
+### Debug Mode Implementation
+- **Activation:** Query parameter `?debug=true`
+- **UI:** Floating button (🐛) in bottom-right
+- **Access:** Available to all users (not just devs)
+- **Quality:** Same code quality as production features
+
+### Error Logging Requirements
+Every error modal must include:
+```tsx
+<button onClick={() => copyDebugLog(errorLog)}>
+  Copy Debug Log
+</button>
+```
+
+**Log Contents:**
+- Error message & stack
+- Timestamp & current route
+- User address & action attempted
+- App version & network
+- Browser/OS/device info
+- Full transaction details
+- API request/response
+
+### Why Production-Ready Debug Tools
+1. Users can't describe errors accurately
+2. Screenshots lack critical context
+3. Debug logs = 10x faster support
+4. One-click copy = better UX than manual transcription
+
+**Debug tools save hours of support time - invest in them.**
+
+---
+
+## RULE 47: API ENDPOINT VERIFICATION (Nov 28, 2025)
+
+Never trust documentation - always verify in practice.
+
+### The Klever API Lesson
+Official docs referenced `api.klever.org` which didn't resolve.  
+Actual working endpoint: `api.mainnet.klever.org`  
+Found in: Community forum, not official docs.
+
+### Verification Steps
+1. **Check DNS:** `nslookup api.example.com`
+2. **Test endpoint:** `curl https://api.example.com/health`
+3. **Search community:** Forums often more accurate than docs
+4. **Centralize config:** All endpoints in `constants.ts`
+
+### Network Configuration Pattern
+```typescript
+// constants.ts
+export const NETWORKS = {
+  mainnet: {
+    nodeUrl: 'https://api.mainnet.klever.org',
+    explorer: 'https://explorer.mainnet.klever.org'
+  },
+  testnet: {
+    nodeUrl: 'https://api.testnet.klever.org',
+    explorer: 'https://explorer.testnet.klever.org'
+  }
+}
+```
+
+**When API changes, update one file, not 20 files.**
+
+---
+
+## RULE 48: FLAT ZIP DELIVERY (Nov 28, 2025)
+
+Provide both nested and flat ZIP options for user convenience.
+
+### The Problem
+Standard zips create parent folders:
+```
+Downloads/
+  digiko-web3-app/  ← Created by unzip
+    src/
+    package.json
+    ...
+```
+
+User must manually move contents to correct location.
+
+### The Solution
+Create two versions:
+
+**1. COMPLETE (nested):**
+```bash
+cd /tmp && zip -r digiko-COMPLETE-v1.1.5.zip digiko-web3-app/
+```
+
+**2. FLAT (direct extraction):**
+```bash
+cd /tmp/digiko-web3-app && zip -r ../digiko-FLAT-v1.1.5.zip .
+```
+
+### Extraction Commands
+```bash
+# FLAT (recommended)
+cd /Users/riccardomarconato/digiko-web3-app
+unzip -o ~/Downloads/digiko-FLAT-v1.1.5.zip
+
+# COMPLETE (if needed)
+cd ~/Downloads
+unzip digiko-COMPLETE-v1.1.5.zip
+mv digiko-web3-app /Users/riccardomarconato/
+```
+
+**Always provide FLAT version for easier workflow.**
+
+---
+
+## RULE 49: LESSONS DOCUMENTATION (Nov 28, 2025)
+
+At the end of significant work sessions, document lessons learned.
+
+### When to Document Lessons
+- After major feature completion
+- After solving difficult bugs
+- After discovering important patterns
+- After full-day work sessions
+- When user says "let's document it"
+
+### Documentation Location
+`docs/dev/LESSONS_YYYY_MM_DD.md`
+
+### Required Sections
+1. **Session Summary** - What was accomplished
+2. **Design Lessons** - UI/UX learnings
+3. **Technical Lessons** - Code/architecture learnings
+4. **Workflow Lessons** - Process improvements
+5. **Patterns to Remember** - Reusable code patterns
+6. **Key Takeaways** - Top 10 learnings
+7. **Metrics** - Files changed, time spent, versions created
+
+### Design Guide Updates
+Significant design patterns must be added to `design_guide.md`:
+- New component patterns
+- Spacing/typography standards
+- Mobile-responsive guidelines
+- Color usage rules
+
+### PROJECT_RULES Updates
+New rules or workflows must be added to this file:
+- Development patterns
+- Quality standards
+- Testing requirements
+- Workflow improvements
+
+**If we learned it today, we document it today - not tomorrow.**
+
+---
+
+## RULE 50: PRODUCTION READINESS CHECKLIST (Nov 28, 2025)
+
+Before marking any version as "production ready", verify all criteria.
+
+### Code Quality
+- [ ] All TypeScript errors resolved
+- [ ] No console.errors in production
+- [ ] All API endpoints verified working
+- [ ] Error handling on all user actions
+- [ ] Loading states on all async operations
+
+### Mobile UX
+- [ ] Tested on iPhone SE (375px)
+- [ ] Tested on iPhone 12/13 (390px)
+- [ ] Tested on iPhone 14 Pro Max (430px)
+- [ ] No horizontal scroll
+- [ ] No text overflow
+- [ ] Touch targets minimum 44x44px
+- [ ] Responsive spacing applied
+- [ ] Typography scales properly
+
+### Visual Polish
+- [ ] Focus states work correctly
+- [ ] Hover states on all interactive elements
+- [ ] Loading animations smooth
+- [ ] No layout shift on interaction
+- [ ] Consistent spacing throughout
+- [ ] Text hierarchy clear
+
+### Functionality
+- [ ] All user flows tested
+- [ ] Wallet connection works
+- [ ] Transactions broadcast successfully
+- [ ] Error modals display correctly
+- [ ] Debug mode functional
+- [ ] Copy functions work
+
+### Documentation
+- [ ] README updated
+- [ ] CHANGELOG entry added
+- [ ] Design guide reflects current state
+- [ ] PROJECT_RULES current
+- [ ] Deployment notes written
+
+### Deployment
+- [ ] Build succeeds (`npm run build`)
+- [ ] No build warnings (address or document)
+- [ ] Environment variables set in Vercel
+- [ ] Preview deployment tested
+- [ ] Analytics configured
+
+**Production ready = tested on actual mobile devices, not just DevTools.**
+
+---
+
+## SUMMARY OF TODAY'S RULES (Nov 28, 2025)
+
+**RULE 40:** Mobile-first responsive design with fintech spacing standards  
+**RULE 41:** Text color minimalism - functional only, not decorative  
+**RULE 42:** Balance display pattern - numbers larger than symbols  
+**RULE 43:** Focus state handling - containers show, inputs suppress  
+**RULE 44:** Iterative visual refinement - screenshot-based iteration  
+**RULE 45:** Mobile layout patterns - center vs left alignment rules  
+**RULE 46:** Debug tools are production code - user-accessible logging  
+**RULE 47:** API endpoint verification - never trust docs alone  
+**RULE 48:** Flat ZIP delivery - provide easy extraction option  
+**RULE 49:** Lessons documentation - document while fresh  
+**RULE 50:** Production readiness checklist - comprehensive verification
+
+**Total Rules:** 50  
+**Version:** 1.8  
+**Last Updated:** November 28, 2025
+

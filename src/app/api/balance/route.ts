@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const response = await fetch(`https://api.klever.org/v1.0/address/${address}/assets`);
+    const response = await fetch(`https://api.mainnet.klever.org/v1.0/address/${address}/assets`);
     
     if (!response.ok) {
       throw new Error(`API responded with status: ${response.status}`);

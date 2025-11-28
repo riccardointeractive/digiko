@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
 
   try {
     console.log('Fetching asset data for:', assetId);
-    const response = await fetch(`https://api.klever.org/v1.0/assets/${assetId}`);
+    const response = await fetch(`https://api.mainnet.klever.org/v1.0/assets/${assetId}`);
     
     if (!response.ok) {
       console.error('❌ Error in asset API route:', new Error(`API responded with status: ${response.status}`));

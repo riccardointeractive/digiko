@@ -13,11 +13,11 @@ interface HowItWorksSectionProps {
 
 export function HowItWorksSection({ selectedToken, currentStats }: HowItWorksSectionProps) {
   return (
-    <div className="mt-12 glass rounded-3xl p-8">
-      <h2 className="text-2xl font-medium text-white mb-8">How Staking Works</h2>
+    <div className="mt-6 md:mt-12 glass rounded-3xl p-5 md:p-8">
+      <h2 className="text-2xl font-medium text-white mb-8 text-center">How Staking Works</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div className="group">
-          <div className="mb-6">
+        <div className="text-center md:text-left">
+          <div className="mb-6 flex justify-center md:justify-start">
             <IconBox 
               icon={
                 <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -33,8 +33,8 @@ export function HowItWorksSection({ selectedToken, currentStats }: HowItWorksSec
             Lock your {selectedToken} tokens to start earning rewards on the Klever Blockchain. No time limit!
           </p>
         </div>
-        <div className="group">
-          <div className="mb-6">
+        <div className="text-center md:text-left">
+          <div className="mb-6 flex justify-center md:justify-start">
             <IconBox 
               icon={
                 <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -50,8 +50,8 @@ export function HowItWorksSection({ selectedToken, currentStats }: HowItWorksSec
             Receive {currentStats.apy}% APY on your staked tokens automatically. Stake as long as you want!
           </p>
         </div>
-        <div className="group">
-          <div className="mb-6">
+        <div className="text-center md:text-left">
+          <div className="mb-6 flex justify-center md:justify-start">
             <IconBox 
               icon={
                 <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>

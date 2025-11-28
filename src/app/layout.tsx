@@ -9,6 +9,7 @@ import { MobileMenu } from '@/components/MobileMenu';
 import { DesktopMoreMenu } from '@/components/DesktopMoreMenu';
 import { NavigationLinks } from '@/components/NavigationLinks';
 import { AdminIcon } from '@/components/AdminIcon';
+import { DebugMenu } from '@/components/DebugMenu';
 import { APP_CONFIG } from '@/config/app';
 import { Analytics } from '@vercel/analytics/react';
 
@@ -108,6 +109,9 @@ export default function RootLayout({
                 </div>
               </div>
             </footer>
+
+            {/* Debug Menu - Shows floating bug button when ?debug=true */}
+            <DebugMenu />
           </div>
         </KleverProvider>
         <Analytics />

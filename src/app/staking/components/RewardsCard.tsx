@@ -25,9 +25,9 @@ export function RewardsCard({
   onRefresh 
 }: RewardsCardProps) {
   return (
-    <div className="glass rounded-3xl p-8 border border-white/10">
+    <div className="glass rounded-3xl p-5 md:p-8 border border-white/10">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-medium text-white">Rewards</h2>
+        <h2 className="text-responsive-h3 text-white">Rewards</h2>
         <button
           onClick={onRefresh}
           disabled={isLoading}
@@ -43,8 +43,13 @@ export function RewardsCard({
       <div className="mb-6">
         <div className="p-6 bg-gradient-to-br from-digiko-primary/10 to-digiko-accent/5 rounded-2xl border border-digiko-primary/20">
           <div className="text-gray-400 text-sm mb-2">Claimable Rewards (Estimated)</div>
-          <div className="text-3xl font-mono font-medium text-white mb-1 tabular-nums">
-            {claimableRewards.formatted} {selectedToken}
+          <div className="flex items-baseline gap-2 flex-wrap mb-1">
+            <span className="text-mobile-4xl md:text-3xl font-mono font-medium text-white tabular-nums">
+              {claimableRewards.formatted}
+            </span>
+            <span className="token-name-mobile text-white">
+              {selectedToken}
+            </span>
           </div>
           <div className="text-xs text-gray-500 font-mono">
             Earn {currentStats.apy}% APY automatically • Actual amount shown after claim

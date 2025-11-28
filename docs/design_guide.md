@@ -2305,3 +2305,425 @@ When implementing new transaction flows or status cards:
 ---
 
 **End of Design Guide v1.7**
+---
+
+## 📱 MOBILE-RESPONSIVE DESIGN SYSTEM (Nov 28, 2025)
+
+### Philosophy
+**Mobile-First Fintech Standards** - Following industry leaders (Revolut, Coinbase, N26)
+- Design for small screens first
+- Add desktop flourishes after
+- Content density over spaciousness on mobile
+- Professional polish on all devices
+
+---
+
+### Mobile Typography Scale
+
+#### Responsive Font Sizes (tailwind.config.js)
+```javascript
+fontSize: {
+  'mobile-xs': ['0.625rem', { lineHeight: '1rem' }],      // 10px
+  'mobile-sm': ['0.75rem', { lineHeight: '1.125rem' }],   // 12px
+  'mobile-base': ['0.875rem', { lineHeight: '1.375rem' }], // 14px
+  'mobile-lg': ['1rem', { lineHeight: '1.5rem' }],        // 16px
+  'mobile-xl': ['1.125rem', { lineHeight: '1.75rem' }],   // 18px
+  'mobile-2xl': ['1.25rem', { lineHeight: '1.875rem' }],  // 20px
+  'mobile-3xl': ['1.5rem', { lineHeight: '2rem' }],       // 24px
+  'mobile-4xl': ['1.75rem', { lineHeight: '2.25rem' }],   // 28px
+  'mobile-5xl': ['2rem', { lineHeight: '2.5rem' }],       // 32px
+  'mobile-6xl': ['2.5rem', { lineHeight: '3rem' }],       // 40px
+}
+```
+
+#### Responsive Utility Classes (globals.css)
+```css
+.text-responsive-h1 { @apply text-mobile-5xl md:text-5xl font-medium; }
+.text-responsive-h2 { @apply text-mobile-4xl md:text-4xl font-medium; }
+.text-responsive-h3 { @apply text-mobile-3xl md:text-3xl font-medium; }
+.text-responsive-h4 { @apply text-mobile-2xl md:text-2xl font-medium; }
+.text-responsive-xl { @apply text-mobile-lg md:text-xl; }
+.text-responsive-2xl { @apply text-mobile-xl md:text-2xl; }
+.stat-mobile { @apply text-mobile-xl md:text-2xl font-medium; }
+.balance-display { @apply text-mobile-xl md:text-2xl font-medium; }
+.token-name-mobile { @apply text-mobile-base md:text-xl; }
+.truncate-mobile { @apply truncate max-w-[150px] md:max-w-none; }
+.break-mobile { @apply break-words md:break-normal; }
+```
+
+#### Scaling Reference
+```
+Element Type    | Desktop | Mobile  | Reduction
+----------------|---------|---------|----------
+H1 Headings     | 48px    | 32px    | -33%
+H2 Headings     | 36px    | 28px    | -22%
+H3 Headings     | 30px    | 24px    | -20%
+Balance Numbers | 20px    | 18px    | -10%
+Token Names     | 20px    | 14px    | -30%
+Body Text       | 20px    | 16px    | -20%
+```
+
+---
+
+### Mobile Spacing System
+
+#### Fintech Standard Spacing
+```
+Element           | Desktop | Mobile  | Reduction
+------------------|---------|---------|----------
+Page Padding      | 32px    | 16px    | -50%
+Page Vertical     | 48px    | 32px    | -33%
+Glass Cards       | 32px    | 20px    | -38%
+Stats Cards       | 24px    | 16px    | -33%
+Card Gaps         | 32px    | 16px    | -50%
+Section Margins   | 48px    | 24px    | -50%
+Inner Spacing     | 24px    | 16px    | -33%
+```
+
+**Average mobile reduction: ~40%**
+
+#### Spacing Class Patterns
+```tsx
+// Container padding
+className="px-4 lg:px-8 py-8 lg:py-12"
+
+// Card padding
+className="p-5 md:p-8"
+
+// Stats/small cards
+className="p-4 md:p-6"
+
+// Element gaps
+className="gap-4 md:gap-8"
+
+// Section spacing
+className="mb-4 md:mb-6"
+className="mb-6 md:mb-12"
+
+// Grid gaps
+className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-8"
+```
+
+---
+
+### Mobile Layout Patterns
+
+#### Center on Mobile, Left on Desktop
+**Use Case:** Feature cards, How It Works sections, icon+text layouts
+
+```tsx
+// Container
+<div className="text-center md:text-left">
+  
+  // Icon wrapper
+  <div className="flex justify-center md:justify-start mb-6">
+    <IconBox icon={...} />
+  </div>
+  
+  // Title (always centered)
+  <h3 className="font-medium text-white mb-2 text-lg">
+    Feature Title
+  </h3>
+  
+  // Description
+  <p className="text-gray-400 text-sm leading-relaxed">
+    Feature description text...
+  </p>
+</div>
+```
+
+#### Balance Display Pattern
+**Use Case:** Token balances, staked amounts
+
+```tsx
+<div className="flex items-baseline gap-2 flex-wrap">
+  {/* Number - larger */}
+  <span className="balance-display font-mono text-white">
+    {amount}
+  </span>
+  
+  {/* Symbol - smaller */}
+  <span className="token-name-mobile text-gray-400">
+    {symbol}
+  </span>
+</div>
+```
+
+**Critical:** Always use `flex-wrap` to prevent overflow on long token names
+
+#### Long Token Names
+**Problem:** BABYDGKO overflows on small screens
+
+```tsx
+// Header with long token name
+<h1 className="text-responsive-h1 text-white flex flex-wrap items-baseline gap-2">
+  <span className="break-mobile">BABYDGKO</span>
+  <span className="text-responsive-xl text-gray-400">Token</span>
+</h1>
+```
+
+**Key:**
+- `flex-wrap` allows name to wrap
+- `break-mobile` breaks words on mobile
+- Smaller subtitle text
+
+---
+
+### Mobile Text Color Rules
+
+#### Minimize Color Usage
+**Philosophy:** Clean, functional color - not decorative
+
+**Do:**
+- White for informational text
+- Gray for secondary/labels
+- Blue ONLY for interactive elements
+
+**Don't:**
+- Blue text for amounts/balances
+- Colored text for token names
+- Accent colors for static info
+
+```tsx
+// ✅ CORRECT
+<span className="text-white">1,234.56</span>
+<span className="text-gray-400">DGKO</span>
+
+// ❌ WRONG
+<span className="text-digiko-accent">1,234.56</span>
+<span className="text-digiko-primary">DGKO</span>
+```
+
+**Exception:** State indicators (green for success, red for error)
+
+---
+
+### Mobile Focus States
+
+#### Global vs Component Focus
+**Problem:** Global `*:focus-visible` creates unwanted outlines
+
+```css
+/* Global (in globals.css) */
+*:focus-visible {
+  outline: 2px solid #0066FF;
+  outline-offset: 2px;
+}
+```
+
+**Solution:** Override on inputs, let containers handle focus
+
+```tsx
+// Input - no outline
+<input 
+  className="
+    outline-none 
+    focus:outline-none 
+    focus-visible:outline-none
+    focus:ring-0
+    focus:border-0
+  "
+/>
+
+// Wrapper - border change
+<div className="
+  border border-white/10
+  focus-within:border-digiko-primary
+  transition-colors
+">
+  <input ... />
+</div>
+```
+
+**Pattern:** Inputs suppress outline, wrappers show focus state
+
+---
+
+### Mobile Component Checklist
+
+When creating/modifying components for mobile:
+
+- [ ] Responsive padding (`p-4 md:p-8`)
+- [ ] Responsive gaps (`gap-4 md:gap-8`)
+- [ ] Responsive typography (`text-responsive-*`)
+- [ ] Balance display pattern for numbers+symbols
+- [ ] Flex-wrap on token name displays
+- [ ] Center-on-mobile for feature cards
+- [ ] White/gray text (blue only for buttons)
+- [ ] Focus states properly handled
+- [ ] Tested on iPhone SE (375px)
+- [ ] Tested on iPhone 14 Pro Max (430px)
+
+---
+
+### Mobile Testing Standards
+
+#### Required Test Devices (DevTools)
+1. **iPhone SE (375px)** - Smallest common size
+2. **iPhone 12/13 (390px)** - Most common
+3. **iPhone 14 Pro Max (430px)** - Largest iPhone
+
+#### Visual Test Checklist
+- [ ] No text overflow or wrapping issues
+- [ ] All content visible without horizontal scroll
+- [ ] Touch targets at least 44x44px
+- [ ] Spacing feels professional (not cramped/wasteful)
+- [ ] Text hierarchy clear
+- [ ] Focus states work correctly
+- [ ] Cards stack properly
+- [ ] No layout shift on interaction
+
+#### Performance Test
+- [ ] Smooth scrolling
+- [ ] Fast tap response
+- [ ] Animations don't jank
+- [ ] Images load progressively
+
+---
+
+### Mobile-First Development Workflow
+
+1. **Start Mobile**
+   - Design component at 375px width
+   - Use mobile spacing (p-4, gap-4, etc)
+   - Center layout if appropriate
+   
+2. **Add Desktop Enhancements**
+   - Add `md:` breakpoint classes
+   - Increase spacing (p-4 → md:p-8)
+   - Left-align if appropriate
+   
+3. **Test Both**
+   - Toggle device toolbar
+   - Check 375px, 390px, 768px, 1440px
+   - Verify breakpoint transitions
+   
+4. **Polish**
+   - Fine-tune spacing
+   - Adjust typography scale
+   - Test focus states
+
+**Never design desktop-first and try to "make it responsive" - always start mobile.**
+
+---
+
+## 📐 Mobile Spacing Reference Chart
+
+```
+Use Case                    | Mobile Class | Desktop Class
+----------------------------|--------------|---------------
+Page container padding      | px-4         | lg:px-8
+Page vertical spacing       | py-8         | lg:py-12
+Large glass cards           | p-5          | md:p-8
+Stats/small cards           | p-4          | md:p-6
+Inner card sections         | p-4          | md:p-6
+Card-to-card gaps           | gap-4        | md:gap-8
+Major section breaks        | mb-6         | md:mb-12
+Minor section breaks        | mb-4         | md:mb-6
+Element spacing             | space-y-4    | md:space-y-6
+Grid column gaps            | gap-4        | md:gap-8
+```
+
+**Rule of Thumb:** Mobile = 16px (p-4), Desktop = 32px (md:p-8)
+
+---
+
+## 🎨 Mobile Color Usage Guide
+
+### Text Colors by Purpose
+
+**Informational (static, read-only):**
+```tsx
+text-white         // Primary values, amounts, titles
+text-gray-400      // Labels, symbols, secondary info
+text-gray-500      // Tertiary, timestamps, metadata
+```
+
+**Interactive (clickable, actionable):**
+```tsx
+text-digiko-primary        // Links, interactive text
+hover:text-digiko-accent   // Hover states
+```
+
+**State Indicators:**
+```tsx
+text-green-400    // Success, positive values
+text-red-400      // Error, negative values
+text-yellow-400   // Warning, pending
+text-blue-400     // Info, neutral
+```
+
+**Disabled:**
+```tsx
+text-gray-600      // Disabled text
+opacity-50         // Disabled elements
+```
+
+### Background Colors by Purpose
+
+**Cards:**
+```tsx
+bg-klever-dark     // Inner sections (rgba(18,18,20))
+glass              // Main cards (rgba(18,18,20,0.5) + blur)
+glass-hover        // Interactive cards
+```
+
+**Buttons:**
+```tsx
+bg-digiko-secondary               // Primary action
+bg-white/5 hover:bg-white/10      // Secondary action
+bg-digiko-primary/10              // Info boxes
+```
+
+**Never use:**
+- Colored backgrounds for text display
+- Blue backgrounds for amounts
+- Accent colors for static content
+
+---
+
+## 💡 Design Principles Summary
+
+### Mobile Design Commandments
+
+1. **Content First**
+   - Mobile users want information, not decoration
+   - Maximize content density while maintaining readability
+   - Every pixel should serve a purpose
+   
+2. **Touch-Friendly**
+   - All interactive elements minimum 44x44px
+   - Adequate spacing between touch targets
+   - Clear visual feedback on interaction
+   
+3. **Hierarchy Through Scale**
+   - Use size, not color, for hierarchy
+   - Numbers bigger than labels
+   - Headings scale proportionally
+   
+4. **Functional Color**
+   - Blue = interactive/actionable
+   - White/gray = informational
+   - Color guides action, not decoration
+   
+5. **Centered When Narrow**
+   - Center-align content on mobile
+   - Left-align on desktop
+   - Icons follow text alignment
+   
+6. **Flexible Containers**
+   - Use flex-wrap for unpredictable content
+   - Allow line breaks for long text
+   - Never force single-line on mobile
+   
+7. **Focus on Performance**
+   - Minimize animations on mobile
+   - Optimize images for small screens
+   - Fast interactions trump fancy effects
+
+---
+
+**Last Updated:** November 28, 2025  
+**Version:** 1.8  
+**Changes:** Added comprehensive mobile-responsive design system
+
