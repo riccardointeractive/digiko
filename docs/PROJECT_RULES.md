@@ -869,3 +869,455 @@ git push
 If explanation needed, write it OUTSIDE the code block.
 
 All bash commands must be copy-paste ready with zero edits required.
+## RULE 30: PRE-ZIP CHECKLIST
+
+Before creating any zip file for Claude, always perform these checks:
+
+### Required Checks
+
+1. **Run git status** - Ensure clean working directory
+   ```bash
+   git status
+   # Should show only intentional changes
+   ```
+
+2. **Verify no ignored files are included**
+   ```bash
+   # Check for common ignored items
+   ls temp/ 2>/dev/null && echo "⚠️  temp/ exists"
+   ls kleverSDK/ 2>/dev/null && echo "⚠️  kleverSDK/ exists in root"
+   ls .vscode/ 2>/dev/null && echo "⚠️  .vscode/ exists"
+   ls tsconfig.tsbuildinfo 2>/dev/null && echo "⚠️  tsconfig.tsbuildinfo exists"
+   ```
+
+3. **Check for nested directories**
+   ```bash
+   # Look for accidental nesting
+   find . -maxdepth 1 -type d -name "digiko-web3-app" 2>/dev/null
+   ```
+
+4. **Verify no temp/workflow files**
+   ```bash
+   ls *_FIX.md READY_TO_*.md GIT_COMMIT_*.md 2>/dev/null
+   ```
+
+5. **Confirm .gitignore compliance**
+   ```bash
+   git status --ignored
+   # Should not show any files that will be zipped
+   ```
+
+### Pre-Zip Command Sequence
+
+```bash
+cd /Users/riccardomarconato/digiko-web3-app
+git status
+find . -type d -name "*{*" -o -name "*}*"
+ls temp/ kleverSDK/ .vscode/ 2>/dev/null
+```
+
+If any issues found → Fix before zipping  
+If all clear → Safe to create zip
+
+---
+
+## RULE 31: NO CURLY BRACES IN DIRECTORY NAMES
+
+**Critical:** Never use `{` or `}` characters in actual directory names.
+
+### Allowed Characters
+
+- ✅ Alphanumeric: `a-z`, `A-Z`, `0-9`
+- ✅ Hyphens: `token-stats`, `error-logging`
+- ✅ Underscores: `token_stats`, `error_logging`
+- ❌ Curly braces: `{types,config}` - **NEVER**
+- ❌ Spaces: `token stats` - **NEVER**
+- ❌ Special chars: `@`, `#`, `$`, etc. - **NEVER**
+
+### Why This Matters
+
+Curly braces in directory names:
+- Break bash commands
+- Confuse git operations
+- Cause build failures
+- Make paths unresolvable
+
+### Placeholder vs Reality
+
+**Documentation placeholders (OK):**
+```
+Create these directories:
+src/app/feature/{types,config,hooks,components}/
+```
+
+This means: Create 4 separate directories
+- `types/`
+- `config/`
+- `hooks/`
+- `components/`
+
+**Reality (WRONG):**
+```bash
+# DO NOT create literal curly-brace directory!
+mkdir "src/app/feature/{types,config,hooks,components}"
+# This creates ONE directory with braces in the name ❌
+```
+
+**Reality (CORRECT):**
+```bash
+# Create each directory separately
+mkdir src/app/feature/types
+mkdir src/app/feature/config
+mkdir src/app/feature/hooks
+mkdir src/app/feature/components
+```
+
+### Verification
+
+Check for malformed directories:
+```bash
+cd /Users/riccardomarconato/digiko-web3-app
+find . -type d -name "*{*" -o -name "*}*"
+# Should return empty
+```
+
+If found → Remove immediately:
+```bash
+rm -rf "path/to/{malformed}/directory"
+```
+
+---
+
+## RULE 32: DOCUMENTATION HIERARCHY
+
+All documentation follows a strict hierarchy for clarity and maintainability.
+
+### Structure
+
+```
+docs/
+├── PROJECT_RULES.md              # ← You are here (Core rules)
+├── CHANGELOG.md                  # Version history
+├── design_guide.md               # Design standards
+├── [FEATURE].md                  # Feature-specific docs
+└── dev/                          # Development documentation
+    ├── README.md                 # Dev docs hub (must read first)
+    ├── MODULAR_ARCHITECTURE.md   # Architecture patterns
+    ├── ERROR_LOGGING.md          # Error handling
+    ├── DEBUG_MODE.md             # Debugging tools
+    ├── TROUBLESHOOTING.md        # Bug fixes
+    ├── [TOPIC].md                # Other technical topics
+    └── archive/                  # Historical docs
+        └── YYYY-MM/
+            └── old_file.md
+```
+
+### File Placement Rules
+
+**Root docs/ directory:**
+- High-level project documentation
+- Design standards
+- Feature-specific guides
+- User-facing documentation
+
+**docs/dev/ directory:**
+- Technical implementation details
+- Development workflows
+- Architecture patterns
+- Internal debugging guides
+- Integration instructions
+
+**Feature directories:**
+- Feature-specific implementation
+- Component documentation
+- Local README if complex
+
+### What Goes Where
+
+**PROJECT_RULES.md (this file):**
+- Development workflows
+- Git procedures
+- Coding standards
+- Critical commands
+- Testing procedures
+
+**design_guide.md:**
+- UI/UX patterns
+- Color palette
+- Typography
+- Component styles
+- Glass morphism specs
+
+**docs/dev/README.md:**
+- Quick reference
+- Asset IDs
+- API endpoints
+- Common commands
+- Links to all dev docs
+
+**docs/dev/[TOPIC].md:**
+- Deep dive on specific topic
+- Implementation details
+- Code patterns
+- Examples
+- Best practices
+
+### Documentation Naming
+
+**General docs:** `TOPIC.md` (uppercase)  
+**Guides:** `topic_guide.md` (lowercase with underscores)  
+**Entry points:** `README.md` (standard)  
+**Historical:** `SESSION_YYYY-MM-DD_Topic.md` (dated)
+
+### When to Create New Docs
+
+**Create new file if:**
+- Topic needs >300 lines
+- Topic is standalone
+- Topic will be referenced often
+- Topic needs separate maintenance
+
+**Add to existing file if:**
+- Related to existing topic
+- <100 lines of content
+- Rarely referenced
+- Part of larger guide
+
+### Documentation Quality Standards
+
+Every doc must have:
+1. Clear title and purpose
+2. Last updated date
+3. Table of contents (if >300 lines)
+4. Code examples
+5. Links to related docs
+
+See `docs/dev/DOCUMENTATION_ARCHITECTURE.md` for complete guidelines.
+
+---
+
+## RULE 33: CLEANUP WORKFLOW
+
+Before executing "let's git it", perform systematic cleanup.
+
+### Pre-Commit Cleanup Checklist
+
+```bash
+cd /Users/riccardomarconato/digiko-web3-app
+```
+
+#### 1. Remove Temporary Files
+```bash
+# Check for temp files
+ls temp/ *_FIX.md READY_TO_*.md GIT_COMMIT_*.md 2>/dev/null
+
+# Remove if found
+rm -rf temp/
+rm *_FIX.md READY_TO_*.md GIT_COMMIT_*.md 2>/dev/null
+```
+
+#### 2. Remove Backup Files
+```bash
+# Check for backups
+find . -name "*.backup" -o -name "*.save" -o -name "*.bak"
+
+# Remove if found
+find . -name "*.backup" -delete
+find . -name "*.save" -delete
+find . -name "*.bak" -delete
+```
+
+#### 3. Check Git Status
+```bash
+git status
+
+# Should show ONLY:
+# - Intentional code changes
+# - Updated documentation
+# - Modified .gitignore (if applicable)
+
+# Should NOT show:
+# - temp/ directory
+# - *_FIX.md files
+# - *.backup files
+# - tsconfig.tsbuildinfo
+# - .vscode/
+# - kleverSDK/ in root
+```
+
+#### 4. Verify .gitignore Compliance
+```bash
+git status --ignored
+
+# Check that ignored items are actually ignored
+# Look for any "to be committed" files that should be ignored
+```
+
+#### 5. Run Build Test
+```bash
+npm run build
+
+# Must succeed with no errors
+# Warnings are OK if minor
+```
+
+### Cleanup Script (Optional)
+
+Create `cleanup.sh` in root:
+```bash
+#!/bin/bash
+echo "🧹 Pre-commit cleanup..."
+
+# Remove temp files
+rm -rf temp/
+rm *_FIX.md READY_TO_*.md GIT_COMMIT_*.md 2>/dev/null
+
+# Remove backups
+find . -name "*.backup" -delete
+find . -name "*.save" -delete
+find . -name "*.bak" -delete
+
+# Show git status
+echo ""
+echo "📊 Git status:"
+git status
+
+echo ""
+echo "✅ Cleanup complete!"
+```
+
+Make executable:
+```bash
+chmod +x cleanup.sh
+```
+
+Run before commit:
+```bash
+./cleanup.sh
+```
+
+### What to Clean
+
+**Always remove:**
+- temp/ directory
+- *_FIX.md workflow files
+- READY_TO_*.md workflow files
+- GIT_COMMIT_*.md draft commits
+- *.backup files
+- *.save files
+- *.bak files
+- .vscode/ directory
+- tsconfig.tsbuildinfo
+- kleverSDK/ in root (keep only in public/)
+
+**Never remove:**
+- node_modules/ (already .gitignored)
+- .next/ (already .gitignored)
+- .env files (already .gitignored)
+- Intentional documentation
+- Source code changes
+- Public assets
+
+### Post-Cleanup Verification
+
+```bash
+# 1. Check git status is clean
+git status
+
+# 2. Verify build works
+npm run build
+
+# 3. Verify no ignored files staged
+git status --ignored
+
+# 4. Double-check removed files are actually gone
+ls temp/ kleverSDK/ .vscode/ 2>/dev/null
+
+# If all checks pass → Safe to commit
+```
+
+### Integration with "let's git it"
+
+The standard git workflow (RULE 19) now includes cleanup:
+
+```bash
+# 1. CLEANUP (NEW STEP)
+./cleanup.sh  # or manual cleanup
+
+# 2. Verify clean
+git status
+
+# 3. Update version (RULE 19a)
+# Edit src/config/app.ts
+
+# 4. Update Updates page (RULE 19b)
+# Edit src/app/updates/page.tsx
+
+# 5. Commit (RULE 19c-d)
+git add .
+git commit -m "LOG HERE"
+git push
+```
+
+### Emergency: Already Committed Junk
+
+If you accidentally committed temp files:
+
+```bash
+# Remove from git, keep locally
+git rm --cached temp/ -r
+git rm --cached *_FIX.md
+
+# Commit the removal
+git commit -m "chore: remove temp files from git"
+git push
+```
+
+If major cleanup needed, see `docs/dev/GIT_NUCLEAR_RESET.md`.
+
+---
+
+## RULE 34: VERSION UPDATE LOCATIONS
+
+When updating version number, these locations must be synchronized:
+
+### Primary Source of Truth
+`src/config/app.ts` - **THE SINGLE SOURCE**
+```typescript
+export const APP_CONFIG = {
+  version: 'v1.0.0',  // Update this FIRST
+  name: 'Digiko',
+  // ...
+}
+```
+
+### Automatically Updated (via import)
+These import from `APP_CONFIG` and update automatically:
+- ✅ Navigation header
+- ✅ Footer
+- ✅ Admin panel
+- ✅ Dashboard account info
+- ✅ Mobile menu
+- ✅ Desktop more menu
+
+### Manually Updated
+`package.json` - **Update to match**
+```json
+{
+  "name": "digiko-web3-app",
+  "version": "1.0.0",  // Update this SECOND (no 'v' prefix)
+}
+```
+
+### Verification
+```bash
+# Check all version references
+grep -r "v1.0.0" src/ | grep -v node_modules
+grep '"version"' package.json
+```
+
+All should match the version in `src/config/app.ts`.
+
+---
+
+These rules supplement the existing PROJECT_RULES.md and help prevent the structural issues identified in the November 28, 2024 audit.
