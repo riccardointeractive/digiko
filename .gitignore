@@ -76,3 +76,20 @@ next-env.d.ts
 kleverSDK/
 kleverchain.workspace.json
 contract/kleverchain.workspace.json
+
+# Workflow files (added by cleanup script)
+*_FIX.md
+READY_TO_*.md
+GIT_COMMIT_*.md
+HOME_SETUP.md
+INTEGRATED_QUICK_START.md
+
+# Editor artifacts
+*.save
+*.backup
+
+# Session notes
+docs/dev/SESSION_*.md
+contract/Cargo.lock
+contract/meta/
+contract/output/
