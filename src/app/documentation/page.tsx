@@ -14,7 +14,7 @@ import { HelpFooter } from './components/HelpFooter';
  */
 export default function DocumentationPage() {
   return (
-    <div className="min-h-screen py-16 px-6 lg:px-8">
+    <div className="min-h-screen py-8 md:py-12 lg:py-16 px-4 md:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
         
         {/* Page Header */}
@@ -24,7 +24,7 @@ export default function DocumentationPage() {
         <QuickNavigation sections={sections} />
 
         {/* Documentation Sections */}
-        <div className="space-y-16">
+        <div className="space-y-10 md:space-y-12 lg:space-y-16">
           {sections.map((section) => (
             <DocumentationSection key={section.id} section={section} />
           ))}

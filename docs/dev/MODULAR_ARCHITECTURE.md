@@ -1130,3 +1130,164 @@ src/app/babydgko/
 
 ---
 
+## Centralized App-Wide Configuration
+
+**Added:** November 29, 2025 (v1.9)  
+**Pattern:** Single source of truth for cross-platform constants  
+**Location:** `src/config/`
+
+### The Problem: Scattered Constants
+
+Before centralization:
+- Social links hardcoded in multiple components
+- App version duplicated across pages
+- API endpoints spread throughout codebase
+- Difficult to update platform-wide settings
+
+### The Solution: src/config/
+
+All app-wide constants centralized in `src/config/` directory:
+
+```
+src/config/
+├── app.ts              # App metadata (version, name, network)
+└── social.ts           # Social media links (NEW)
+```
+
+### app.ts - Application Metadata
+
+**Purpose:** Central source for app information
+**Usage:** Automatically updates navigation, footer, admin, dashboard, menus
+
+```typescript
+export const APP_CONFIG = {
+  name: 'Digiko',
+  version: '1.9.0',
+  network: 'Klever Mainnet',
+  status: 'Live'
+} as const;
+
+// Import everywhere:
+import { APP_CONFIG } from '@/config/app';
+```
+
+**Auto-updates in:**
+- Navigation header
+- Footer
+- Admin panel (2 places)
+- Dashboard account info
+- Mobile menu
+- Desktop More menu
+
+### social.ts - Social Media Links
+
+**Added:** November 29, 2025  
+**Purpose:** Centralized social media URLs  
+**Pattern:** Type-safe access to platform links
+
+```typescript
+export const SOCIAL_LINKS = {
+  DGKO: {
+    X: 'https://x.com/DigikoCrypto',
+    LINKEDIN: 'https://www.linkedin.com/company/digiko-marketplace/',
+    TELEGRAM: 'https://t.me/DigikoCommunity',
+  },
+  BABYDGKO: {
+    X: 'https://x.com/babydigiko',
+    LINKEDIN: 'https://www.linkedin.com/company/digiko-marketplace/',
+    TELEGRAM: 'https://t.me/DigikoCommunity',
+  },
+} as const;
+```
+
+**Usage in components:**
+
+Before (hardcoded):
+```tsx
+// ❌ Hardcoded - scattered everywhere
+const socialLinks = [
+  { name: 'X', url: 'https://x.com/digabordigital', ... },
+  { name: 'LinkedIn', url: 'https://linkedin.com/...' ... },
+];
+```
+
+After (centralized):
+```tsx
+// ✅ Centralized - single source of truth
+import { SOCIAL_LINKS } from '@/config/social';
+
+const socialLinks = [
+  { name: 'X', url: SOCIAL_LINKS.DGKO.X, ... },
+  { name: 'LinkedIn', url: SOCIAL_LINKS.DGKO.LINKEDIN, ... },
+];
+```
+
+**Benefits:**
+1. Update once, applies everywhere
+2. Type-safe access (TypeScript autocomplete)
+3. Impossible to have inconsistent links
+4. Easy to add new platforms
+5. Clear documentation of all social channels
+
+**Files using centralized social links:**
+- `src/app/dgko/components/CommunitySection.tsx`
+- `src/app/babydgko/components/CommunitySection.tsx`
+
+### Pattern for Future Centralization
+
+**When to centralize:**
+- Value used in 2+ places
+- App-wide configuration
+- External URLs (APIs, social media, documentation)
+- Feature flags
+- Environment-dependent values
+
+**How to centralize:**
+
+1. Create config file in `src/config/[name].ts`
+2. Export const object with `as const` for type safety
+3. Import using `@/config/[name]`
+4. Update all usages to use centralized value
+5. Document in this guide
+
+**Example - API Endpoints:**
+```typescript
+// src/config/api.ts
+export const API_ENDPOINTS = {
+  KLEVER: 'https://api.mainnet.klever.org',
+  EXPLORER: 'https://kleverscan.org',
+} as const;
+```
+
+### Key Learnings
+
+**1. Type Safety Matters**
+Using `as const` enables TypeScript autocomplete and prevents typos:
+```typescript
+// Autocomplete suggests: DGKO, BABYDGKO
+SOCIAL_LINKS.DGKO.X // ✅ Type-safe
+SOCIAL_LINKS.DGKO.TWITTER // ❌ TypeScript error!
+```
+
+**2. Single Source of Truth Principle**
+Never duplicate constants. If it exists in two places, it belongs in a config file.
+
+**3. Clear Naming Convention**
+- ALL_CAPS for config objects: `SOCIAL_LINKS`, `APP_CONFIG`
+- camelCase for config files: `social.ts`, `app.ts`
+- Descriptive names: `SOCIAL_LINKS` not `LINKS`
+
+**4. Documentation is Critical**
+Every config file should have:
+- JSDoc comment explaining purpose
+- Type exports for consumer code
+- Clear object structure
+
+### Related Project Rules
+
+- **RULE 12:** Never hardcode app-wide constants in components
+- **RULE 11:** Follow project naming conventions
+- **Pattern:** All centralized configs in `src/config/`
+
+---
+

@@ -1,5 +1,6 @@
 import { SocialLink } from '../types/babydgko.types';
 import { Icons } from '../config/babydgko.config';
+import { SOCIAL_LINKS } from '@/config/social';
 
 /**
  * CommunitySection Component
@@ -10,14 +11,20 @@ export function CommunitySection() {
     { 
       name: 'X (Twitter)', 
       icon: Icons.x, 
-      url: 'https://x.com/DigikoSwap', 
+      url: SOCIAL_LINKS.BABYDGKO.X, 
       color: 'hover:text-gray-300' 
+    },
+    { 
+      name: 'LinkedIn', 
+      icon: Icons.linkedin, 
+      url: SOCIAL_LINKS.BABYDGKO.LINKEDIN, 
+      color: 'hover:text-blue-400' 
     },
     { 
       name: 'Telegram', 
       icon: Icons.telegram, 
-      url: 'https://t.me/DigikoSwap', 
-      color: 'hover:text-blue-400' 
+      url: SOCIAL_LINKS.BABYDGKO.TELEGRAM, 
+      color: 'hover:text-sky-400' 
     },
   ];
 

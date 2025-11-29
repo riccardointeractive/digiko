@@ -51,7 +51,10 @@ module.exports = {
         mono: ['var(--font-geist-mono)', 'monospace'],
       },
       fontSize: {
-        // Mobile-optimized font sizes
+        // MOBILE-FIRST RESPONSIVE TYPOGRAPHY SYSTEM
+        // Based on fintech industry standards (Revolut, Coinbase, etc.)
+        
+        // Mobile (320px - 767px) - Base sizes
         'mobile-xs': ['0.625rem', { lineHeight: '1rem' }],      // 10px
         'mobile-sm': ['0.75rem', { lineHeight: '1.125rem' }],    // 12px
         'mobile-base': ['0.875rem', { lineHeight: '1.375rem' }], // 14px
@@ -62,6 +65,39 @@ module.exports = {
         'mobile-4xl': ['1.75rem', { lineHeight: '2.25rem' }],    // 28px
         'mobile-5xl': ['2rem', { lineHeight: '2.5rem' }],        // 32px
         'mobile-6xl': ['2.5rem', { lineHeight: '3rem' }],        // 40px
+        
+        // Tablet (768px - 1023px) - Intermediate sizes
+        'tablet-xs': ['0.6875rem', { lineHeight: '1.0625rem' }],   // 11px
+        'tablet-sm': ['0.8125rem', { lineHeight: '1.1875rem' }],   // 13px
+        'tablet-base': ['0.9375rem', { lineHeight: '1.4375rem' }], // 15px
+        'tablet-lg': ['1.0625rem', { lineHeight: '1.5625rem' }],   // 17px
+        'tablet-xl': ['1.1875rem', { lineHeight: '1.8125rem' }],   // 19px
+        'tablet-2xl': ['1.375rem', { lineHeight: '2rem' }],        // 22px
+        'tablet-3xl': ['1.75rem', { lineHeight: '2.25rem' }],      // 28px
+        'tablet-4xl': ['2.25rem', { lineHeight: '2.75rem' }],      // 36px
+        'tablet-5xl': ['2.75rem', { lineHeight: '3.25rem' }],      // 44px
+        'tablet-6xl': ['3.5rem', { lineHeight: '4rem' }],          // 56px
+        
+        // Desktop (1024px+) - Full sizes (Tailwind defaults)
+        // xs: 12px, sm: 14px, base: 16px, lg: 18px, xl: 20px
+        // 2xl: 24px, 3xl: 30px, 4xl: 36px, 5xl: 48px
+        // 6xl: 60px, 7xl: 72px, 8xl: 96px, 9xl: 128px
+      },
+      screens: {
+        // Custom breakpoints for precise responsive control
+        'xs': '375px',   // iPhone SE minimum
+        'sm': '640px',   // Tailwind default
+        'md': '768px',   // Tablet start
+        'lg': '1024px',  // Desktop start
+        'xl': '1280px',  // Large desktop
+        '2xl': '1536px', // Extra large desktop
+      },
+      spacing: {
+        // Responsive spacing scale additions
+        '18': '4.5rem',   // 72px
+        '88': '22rem',    // 352px
+        '104': '26rem',   // 416px
+        '128': '32rem',   // 512px
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

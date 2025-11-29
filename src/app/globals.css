@@ -205,54 +205,77 @@ html {
   color: white;
 }
 /* ========================================
-   MOBILE-RESPONSIVE TYPOGRAPHY
+   RESPONSIVE TYPOGRAPHY SYSTEM
+   Three-tier scaling: Mobile → Tablet → Desktop
+   Based on fintech industry standards
    ======================================== */
 
-/* Responsive Headings - Auto-scale from mobile to desktop */
+/* Responsive Headings - Auto-scale across all breakpoints */
 .text-responsive-h1 {
-  @apply text-mobile-5xl md:text-5xl font-medium;
+  @apply text-mobile-5xl md:text-tablet-5xl lg:text-5xl font-medium;
 }
 
 .text-responsive-h2 {
-  @apply text-mobile-4xl md:text-4xl font-medium;
+  @apply text-mobile-4xl md:text-tablet-4xl lg:text-4xl font-medium;
 }
 
 .text-responsive-h3 {
-  @apply text-mobile-3xl md:text-3xl font-medium;
+  @apply text-mobile-3xl md:text-tablet-3xl lg:text-3xl font-medium;
 }
 
 .text-responsive-h4 {
-  @apply text-mobile-2xl md:text-2xl font-medium;
+  @apply text-mobile-2xl md:text-tablet-2xl lg:text-2xl font-medium;
+}
+
+.text-responsive-h5 {
+  @apply text-mobile-xl md:text-tablet-xl lg:text-xl font-medium;
+}
+
+.text-responsive-h6 {
+  @apply text-mobile-lg md:text-tablet-lg lg:text-lg font-medium;
 }
 
 /* Responsive Body Text */
 .text-responsive-xl {
-  @apply text-mobile-lg md:text-xl;
+  @apply text-mobile-lg md:text-tablet-lg lg:text-xl;
 }
 
 .text-responsive-2xl {
-  @apply text-mobile-xl md:text-2xl;
+  @apply text-mobile-xl md:text-tablet-xl lg:text-2xl;
+}
+
+.text-responsive-base {
+  @apply text-mobile-base md:text-tablet-base lg:text-base;
+}
+
+.text-responsive-sm {
+  @apply text-mobile-sm md:text-tablet-sm lg:text-sm;
+}
+
+/* Responsive Display Text (Hero sections) */
+.text-responsive-display {
+  @apply text-mobile-6xl md:text-tablet-6xl lg:text-7xl font-semibold;
 }
 
 /* Mobile-Optimized Stats Display */
 .stat-mobile {
-  @apply text-mobile-xl md:text-2xl font-medium;
+  @apply text-mobile-xl md:text-tablet-2xl lg:text-2xl font-medium;
 }
 
 /* Mobile Text Utilities */
 .truncate-mobile {
-  @apply truncate max-w-[150px] md:max-w-none;
+  @apply truncate max-w-[150px] md:max-w-[200px] lg:max-w-none;
 }
 
 .break-mobile {
-  @apply break-words md:break-normal;
+  @apply break-words lg:break-normal;
 }
 
 /* Mobile-Friendly Balance Display */
 .balance-display {
-  @apply text-mobile-xl md:text-2xl font-medium;
+  @apply text-mobile-xl md:text-tablet-2xl lg:text-2xl font-medium;
 }
 
 .token-name-mobile {
-  @apply text-mobile-base md:text-xl;
+  @apply text-mobile-base md:text-tablet-lg lg:text-xl;
 }

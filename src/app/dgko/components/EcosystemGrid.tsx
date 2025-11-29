@@ -14,9 +14,9 @@ export function EcosystemGrid() {
   ];
 
   return (
-    <div className="mb-12">
-      <h2 className="text-2xl font-medium text-white mb-6">Ecosystem</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="mb-8 md:mb-10 lg:mb-12">
+      <h2 className="text-responsive-h3 text-white mb-4 md:mb-5 lg:mb-6">Ecosystem</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
         {ecosystemFeatures.map((feature) => (
           <EcosystemCard
             key={feature.title}

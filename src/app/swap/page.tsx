@@ -91,13 +91,13 @@ export default function SwapPage() {
   }
 
   return (
-    <main className="min-h-screen py-16">
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
+    <main className="min-h-screen py-8 md:py-12 lg:py-16">
+      <div className="max-w-[1400px] mx-auto px-4 md:px-6 lg:px-8">
         
         {/* Page Header */}
         <SwapHeader />
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-5 lg:gap-6 mb-8 md:mb-10 lg:mb-12">
           {/* Swap Interface */}
           <div className="lg:col-span-2">
             <SwapInterface
@@ -116,7 +116,7 @@ export default function SwapPage() {
           </div>
 
           {/* Sidebar */}
-          <div className="space-y-6">
+          <div className="space-y-4 md:space-y-5 lg:space-y-6">
             {/* Pool Liquidity */}
             <PoolLiquidityCard 
               dgkoReserve={dgkoReserve}
@@ -129,7 +129,7 @@ export default function SwapPage() {
             {/* View History Button */}
             <button
               onClick={toggleHistory}
-              className="w-full glass rounded-2xl p-4 border border-white/10 hover:border-digiko-primary/40 transition-all duration-300 text-white font-medium"
+              className="w-full glass rounded-2xl p-3 md:p-3.5 lg:p-4 border border-white/10 hover:border-digiko-primary/40 transition-all duration-300 text-white font-medium text-responsive-base"
             >
               {showHistory ? 'Hide' : 'Show'} Transaction History
             </button>

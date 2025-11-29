@@ -1,7 +1,195 @@
 # Digiko Web3 App - Design Guide
-**Version:** 1.7  
-**Last Updated:** November 25, 2025 (TransactionModal patterns, Legendary card designs, Premium animations)  
+**Version:** 1.9  
+**Last Updated:** November 29, 2025 (Comprehensive Responsive Design System)  
 **Design Philosophy:** Apple-inspired fintech minimalism with Web3 sophistication
+
+---
+
+## 📱 RESPONSIVE DESIGN SYSTEM
+
+### Breakpoint Strategy
+
+We follow a **mobile-first, three-tier scaling system** based on fintech industry standards (Revolut, Coinbase, Linear, Vercel).
+
+```
+Mobile:  320px - 767px  (xs, sm breakpoints)
+Tablet:  768px - 1023px (md breakpoint)
+Desktop: 1024px+        (lg, xl, 2xl breakpoints)
+```
+
+**Key Principles:**
+1. Design for mobile first, then enhance for larger screens
+2. Typography scales proportionally across breakpoints
+3. Spacing increases systematically with screen size
+4. Content density adapts to available space
+5. Touch targets remain accessible on all devices
+
+### Responsive Typography Scale
+
+All typography scales across three breakpoints using a **mathematical progression**:
+
+| Element | Mobile (375px) | Tablet (768px) | Desktop (1024px+) | Usage |
+|---------|----------------|----------------|-------------------|-------|
+| **Display** | 40px | 56px | 72px | Hero sections only |
+| **H1** | 32px | 44px | 48px | Page titles |
+| **H2** | 28px | 36px | 36px | Major sections |
+| **H3** | 24px | 28px | 30px | Subsections |
+| **H4** | 20px | 22px | 24px | Card titles |
+| **H5** | 18px | 19px | 20px | Small headers |
+| **H6** | 16px | 17px | 18px | Micro headers |
+| **Body XL** | 16px | 17px | 20px | Hero descriptions |
+| **Body 2XL** | 18px | 19px | 24px | Large intro text |
+| **Body Base** | 14px | 15px | 16px | Standard text |
+| **Body Small** | 12px | 13px | 14px | Secondary info |
+| **Caption** | 10px | 11px | 12px | Labels, metadata |
+
+**Implementation:**
+
+```tsx
+// Use responsive classes for automatic scaling
+<h1 className="text-responsive-h1">Page Title</h1>
+<h2 className="text-responsive-h2">Section Header</h2>
+<h3 className="text-responsive-h3">Subsection</h3>
+<p className="text-responsive-xl">Large body text</p>
+<p className="text-responsive-base">Standard text</p>
+
+// Manual breakpoint control (when needed)
+<h1 className="text-mobile-5xl md:text-tablet-5xl lg:text-5xl">
+  Custom scaling
+</h1>
+```
+
+### Responsive Spacing System
+
+Spacing scales proportionally with screen size following fintech standards:
+
+| Use Case | Mobile | Tablet | Desktop | Notes |
+|----------|--------|--------|---------|-------|
+| **Page Padding (X)** | `px-4` (16px) | `md:px-6` (24px) | `lg:px-8` (32px) | Horizontal container |
+| **Page Padding (Y)** | `py-8` (32px) | `md:py-10` (40px) | `lg:py-12` (48px) | Vertical container |
+| **Large Cards** | `p-5` (20px) | `md:p-6` (24px) | `lg:p-8` (32px) | Glass cards |
+| **Small Cards** | `p-4` (16px) | `md:p-5` (20px) | `lg:p-6` (24px) | Stat cards |
+| **Card Gaps** | `gap-4` (16px) | `md:gap-6` (24px) | `lg:gap-8` (32px) | Grid/flex spacing |
+| **Section Breaks** | `mb-6` (24px) | `md:mb-8` (32px) | `lg:mb-12` (48px) | Major sections |
+| **Element Spacing** | `mb-4` (16px) | `md:mb-5` (20px) | `lg:mb-6` (24px) | Between elements |
+| **Tight Spacing** | `mb-3` (12px) | `md:mb-4` (16px) | `lg:mb-5` (20px) | Related items |
+
+**Implementation Pattern:**
+
+```tsx
+// Container
+<div className="px-4 md:px-6 lg:px-8 py-8 md:py-10 lg:py-12">
+  
+  // Large card
+  <div className="p-5 md:p-6 lg:p-8 glass">
+    
+    // Card grid
+    <div className="grid gap-4 md:gap-6 lg:gap-8">
+      
+      // Small card
+      <div className="p-4 md:p-5 lg:p-6">
+        <h3 className="text-responsive-h3 mb-3 md:mb-4 lg:mb-5">Title</h3>
+        <p className="text-responsive-base">Content</p>
+      </div>
+      
+    </div>
+  </div>
+</div>
+```
+
+### Responsive Layout Patterns
+
+#### Page Container
+```tsx
+<div className="min-h-screen px-4 md:px-6 lg:px-8 py-8 md:py-10 lg:py-12">
+  {/* Content */}
+</div>
+```
+
+#### Section with Title
+```tsx
+<div className="mb-8 md:mb-10 lg:mb-12">
+  <h1 className="text-responsive-h1 mb-3 md:mb-4">Title</h1>
+  <p className="text-responsive-xl text-gray-400">Description</p>
+</div>
+```
+
+#### Card Grid
+```tsx
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
+  <div className="glass p-5 md:p-6 lg:p-8">
+    {/* Card content */}
+  </div>
+</div>
+```
+
+#### Stats Display
+```tsx
+<div className="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-6 lg:gap-8">
+  <div className="text-center md:text-left">
+    <div className="text-responsive-h2 font-mono">123.45</div>
+    <div className="text-responsive-base text-gray-400">Label</div>
+  </div>
+</div>
+```
+
+### Mobile-Specific Optimizations
+
+#### Typography
+- **Reduce font sizes** by ~35% compared to desktop
+- **Maintain hierarchy** through size relationships
+- **Use medium weight** (500) instead of bold (700)
+- **Optimize line height** for readability (1.5-1.625)
+
+#### Spacing
+- **Tighter padding** on cards (p-4 vs p-8)
+- **Reduced gaps** between elements (gap-4 vs gap-8)
+- **Compact margins** for sections (mb-6 vs mb-12)
+- **Minimal horizontal padding** (px-4) to maximize content width
+
+#### Layout
+- **Stack vertically** instead of horizontal layouts
+- **Center align** feature cards and stats
+- **Full width** buttons and inputs
+- **Collapse navigation** into hamburger menu
+
+#### Touch Targets
+- **Minimum 44x44px** for all interactive elements
+- **Increased padding** on buttons (py-4 minimum)
+- **Adequate spacing** between touch targets (gap-3 minimum)
+
+### Tablet-Specific Considerations
+
+Tablet sits between mobile and desktop, requiring careful balance:
+
+#### Typography
+- **Intermediate sizes** (~80% of desktop)
+- **Balanced line height** (1.5-1.75)
+- **Slightly reduced** but not cramped
+
+#### Layout
+- **2-column grids** for cards
+- **Hybrid alignment** (center for features, left for lists)
+- **Expanded navigation** (partial or full)
+- **Wider containers** but not full desktop width
+
+#### Spacing
+- **Mid-range padding** (p-6 typical)
+- **Comfortable gaps** (gap-6 typical)
+- **Adequate margins** (mb-8 typical)
+
+### Responsive Component Checklist
+
+When creating or modifying components:
+
+- [ ] **Typography scales** across all breakpoints
+- [ ] **Spacing adapts** (padding, gaps, margins)
+- [ ] **Layout responds** (stack on mobile, grid on desktop)
+- [ ] **Touch targets** meet 44x44px minimum
+- [ ] **Text doesn't overflow** at any breakpoint
+- [ ] **Images scale** proportionally
+- [ ] **Focus states** work on all devices
+- [ ] **Tested** on mobile (375px), tablet (768px), desktop (1440px)
 
 ---
 
@@ -2723,7 +2911,13 @@ bg-digiko-primary/10              // Info boxes
 
 ---
 
-**Last Updated:** November 28, 2025  
-**Version:** 1.8  
-**Changes:** Added comprehensive mobile-responsive design system
+**Last Updated:** November 29, 2025  
+**Version:** 1.9  
+**Changes:** 
+- Added comprehensive three-tier responsive design system (Mobile → Tablet → Desktop)
+- Documented complete typography scaling across all breakpoints
+- Created responsive spacing system with fintech-standard patterns
+- Added tablet-specific font sizes and considerations
+- Established responsive layout patterns and component checklist
+- Updated all responsive classes with tablet breakpoint support
 

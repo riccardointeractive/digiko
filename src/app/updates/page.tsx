@@ -12,7 +12,7 @@ import { UpdateEntry } from './components/UpdateEntry';
  */
 export default function UpdatesPage() {
   return (
-    <div className="min-h-screen py-16 px-6 lg:px-8">
+    <div className="min-h-screen py-8 md:py-12 lg:py-16 px-4 md:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
         
         {/* Page Header */}
@@ -24,7 +24,7 @@ export default function UpdatesPage() {
           <div className="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-digiko-primary/50 via-white/10 to-transparent" />
 
           {/* Update Entries */}
-          <div className="space-y-12">
+          <div className="space-y-8 md:space-y-10 lg:space-y-12">
             {updates.map((update) => (
               <UpdateEntry 
                 key={update.version} 
@@ -35,9 +35,9 @@ export default function UpdatesPage() {
           </div>
 
           {/* End of timeline */}
-          <div className="relative pl-8 pt-8">
-            <div className="absolute left-0 top-8 -translate-x-1/2 w-2 h-2 rounded-full bg-gray-600" />
-            <p className="text-sm text-gray-600">
+          <div className="relative pl-6 md:pl-7 lg:pl-8 pt-6 md:pt-7 lg:pt-8">
+            <div className="absolute left-0 top-6 md:top-7 lg:top-8 -translate-x-1/2 w-2 h-2 rounded-full bg-gray-600" />
+            <p className="text-responsive-sm text-gray-600">
               More updates coming soon...
             </p>
           </div>

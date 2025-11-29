@@ -1,4 +1,5 @@
 import { Icons } from '../config/dgko.config';
+import { SOCIAL_LINKS } from '@/config/social';
 
 /**
  * CommunitySection Component
@@ -6,9 +7,9 @@ import { Icons } from '../config/dgko.config';
  */
 export function CommunitySection() {
   const socialLinks = [
-    { name: 'X (Twitter)', icon: Icons.x, url: 'https://x.com/digabordigital', color: 'hover:text-white' },
-    { name: 'LinkedIn', icon: Icons.linkedin, url: 'https://linkedin.com/company/digabordigital', color: 'hover:text-blue-400' },
-    { name: 'Telegram', icon: Icons.telegram, url: 'https://t.me/digabordigital', color: 'hover:text-sky-400' },
+    { name: 'X (Twitter)', icon: Icons.x, url: SOCIAL_LINKS.DGKO.X, color: 'hover:text-white' },
+    { name: 'LinkedIn', icon: Icons.linkedin, url: SOCIAL_LINKS.DGKO.LINKEDIN, color: 'hover:text-blue-400' },
+    { name: 'Telegram', icon: Icons.telegram, url: SOCIAL_LINKS.DGKO.TELEGRAM, color: 'hover:text-sky-400' },
   ];
 
   return (
